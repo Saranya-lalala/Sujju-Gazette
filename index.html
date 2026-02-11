@@ -360,18 +360,18 @@
     <div id="crossGrid" class="cross-grid"></div>
     <div class="clues">
       <div><h4>Across</h4>
-      <p><b>1.</b> Her eternal nemesis in beverage form</p>
-      <p><b>5.</b> SPF? Never heard of her</p>
-      <p><b>7.</b> "So... neglected hot coffee?"</p>
-      <p><b>9.</b> The Abu Dhabi airport heartbreak</p>
-      <p><b>11.</b> The contested "first meeting"</p></div>
+      <p><b>1.</b> The Abu Dhabi airport heartbreak</p>
+      <p><b>5.</b> Hum ne toh jab, kaliyan maangi</p>
+      <p><b>6.</b> The contested "first meeting"</p>
+      <p><b>7.</b> Famous rap song of ours</p>
+      <p><b>8.</b> Dimpled sibling we adore</p>
+      <p><b>9.</b> Cafe close to our heart</p>
+      <p><b>10.</b> Man's play we went for and I messed up taking a good picture of you with</p>
+      <p><b>11.</b> Made Salman sound amazing in the 90s</p></div>
       <div style="margin-top:20px;"><h4>Down</h4>
       <p><b>2.</b> The annual ritual, August edition, ITC</p>
-      <p><b>3.</b> Third wheel, professional grade</p>
-      <p><b>4.</b> ₹10 and a dream</p>
-      <p><b>6.</b> First time screaming in a crowd, together, in the rain</p>
-      <p><b>8.</b> It's a loser's choice, but I secretly love it</p>
-      <p><b>10.</b> Hum ne toh jab, kaliyan maangi</p></div>
+      <p><b>3.</b> It's a loser's choice, but I secretly love it</p>
+      <p><b>4.</b> Third wheel, professional grade</p></div>
     </div>
   </div>
   <button class="game-btn" id="toLetter" style="margin-top:25px;">Continue to Letter →</button>
@@ -612,10 +612,23 @@ document.getElementById('submit').onclick = function() {
   renderConn();
 };
 
-// CROSSWORD
+// CROSSWORD - Fixed with proper intersections
 var clues = {
-  across: [{n:1,a:'CHAI',r:0,c:0},{n:5,a:'SUNSCREEN',r:2,c:0},{n:7,a:'ICEDCOFFEE',r:4,c:0},{n:9,a:'OMANCHIPS',r:6,c:1},{n:11,a:'GVM',r:8,c:3}],
-  down: [{n:2,a:'OMSHANTOM',r:0,c:2},{n:3,a:'VEEKSHITH',r:0,c:6},{n:4,a:'BREADPAKODA',r:1,c:4},{n:6,a:'PENNMASALA',r:2,c:8},{n:8,a:'MINTCHIP',r:5,c:0},{n:10,a:'PYAASA',r:6,c:5}]
+  across: [
+    {n:1,a:'OMANCHIPS',r:0,c:0},
+    {n:5,a:'PYAASA',r:7,c:1},
+    {n:6,a:'GVM',r:3,c:4},
+    {n:7,a:'LOVEDOSE',r:2,c:9},
+    {n:8,a:'BOBBY',r:5,c:8},
+    {n:9,a:'DYU',r:8,c:8},
+    {n:10,a:'RAJAT',r:10,c:8},
+    {n:11,a:'SPB',r:12,c:8}
+  ],
+  down: [
+    {n:2,a:'OMSHANTIOM',r:0,c:0},
+    {n:3,a:'MINTCHIP',r:0,c:1},
+    {n:4,a:'VEEKSHITH',r:3,c:5}
+  ]
 };
 var cells = {};
 
