@@ -44,8 +44,8 @@
     .rain-label { text-align: center; font-size: 10px; margin-top: 8px; background: white; padding: 3px 8px; border-radius: 10px; }
     
     /* Rain */
-    #rain-container { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 9998; display: none; }
-    #rain-container.active { display: block; }
+    #rain-container { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 9998; display: none; background: transparent; transition: background 0.5s; }
+    #rain-container.active { display: block; background: rgba(30, 41, 59, 0.5); }
     .raindrop { position: absolute; width: 2px; height: 15px; background: linear-gradient(transparent, #7cb9e8); animation: fall linear infinite; }
     @keyframes fall { to { transform: translateY(100vh); } }
     
