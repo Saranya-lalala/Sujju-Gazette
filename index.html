@@ -4,754 +4,568 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Sujju Gazette</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;600&display=swap');
-    
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Playfair Display', Georgia, serif; background: #fef3e2; }
-    .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Playfair Display', Georgia, serif; background: linear-gradient(to bottom, #fef3e2, #fde8d0); min-height: 100vh; }
     .font-sans { font-family: 'IBM Plex Sans', Arial, sans-serif; }
+    .screen { display: none; min-height: 100vh; padding: 20px; }
+    .screen.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
     
     /* Animations */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-    @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-    @keyframes wiggle {
-      0%, 100% { transform: rotate(-2deg); }
-      50% { transform: rotate(2deg); }
-    }
-    @keyframes popIn {
-      0% { transform: scale(0); opacity: 0; }
-      70% { transform: scale(1.1); }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    @keyframes slideInLeft {
-      from { opacity: 0; transform: translateX(-50px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(50px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes heartBeat {
-      0%, 100% { transform: scale(1); }
-      25% { transform: scale(1.1); }
-      50% { transform: scale(1); }
-      75% { transform: scale(1.1); }
-    }
-    @keyframes confetti {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
-    }
-    @keyframes typewriter {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-    @keyframes blink {
-      50% { border-color: transparent; }
-    }
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 0 5px rgba(0,0,0,0.1); }
-      50% { box-shadow: 0 0 20px rgba(0,0,0,0.2); }
-    }
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+    @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes wiggle { 0%, 100% { transform: rotate(-1deg); } 50% { transform: rotate(1deg); } }
+    @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(400px) rotate(720deg); opacity: 0; } }
     
-    .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
-    .animate-fadeIn { animation: fadeIn 1s ease-out forwards; }
+    .animate-fadeInUp { animation: fadeInUp 0.6s ease-out forwards; }
+    .animate-fadeIn { animation: fadeIn 0.8s ease-out forwards; }
     .animate-float { animation: float 3s ease-in-out infinite; }
-    .animate-pulse-slow { animation: pulse 2s ease-in-out infinite; }
-    .animate-wiggle { animation: wiggle 0.5s ease-in-out infinite; }
-    .animate-popIn { animation: popIn 0.4s ease-out forwards; }
-    .animate-slideInLeft { animation: slideInLeft 0.6s ease-out forwards; }
-    .animate-slideInRight { animation: slideInRight 0.6s ease-out forwards; }
+    .animate-pulse { animation: pulse 2s ease-in-out infinite; }
+    .animate-popIn { animation: popIn 0.3s ease-out forwards; }
     .animate-heartBeat { animation: heartBeat 1.5s ease-in-out infinite; }
-    .animate-glow { animation: glow 2s ease-in-out infinite; }
     
-    .delay-100 { animation-delay: 0.1s; }
-    .delay-200 { animation-delay: 0.2s; }
-    .delay-300 { animation-delay: 0.3s; }
-    .delay-400 { animation-delay: 0.4s; }
-    .delay-500 { animation-delay: 0.5s; }
+    .btn { background: linear-gradient(90deg, #1a1a1a 0%, #333 50%, #1a1a1a 100%); background-size: 200% 100%; animation: shimmer 3s infinite; color: #fef3e2; padding: 12px 28px; font-size: 16px; border: none; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; transition: transform 0.2s; }
+    .btn:hover { transform: scale(1.05); }
     
-    .shimmer-btn {
-      background: linear-gradient(90deg, #1a1a1a 0%, #333 50%, #1a1a1a 100%);
-      background-size: 200% 100%;
-      animation: shimmer 2s infinite;
-    }
+    .photo-frame { border: 2px solid #000; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+    .photo-frame:hover { transform: scale(1.02) rotate(1deg); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
+    .photo-frame img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
     
-    .photo-frame {
-      transition: all 0.3s ease;
-    }
-    .photo-frame:hover {
-      transform: scale(1.02) rotate(1deg);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
+    .strikethrough { position: relative; }
+    .strikethrough::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; background: #000; }
     
-    .tile-flip {
-      transition: transform 0.3s ease, background-color 0.3s ease;
-    }
-    .tile-flip:hover {
-      transform: scale(1.05);
-    }
+    .floating-el { position: absolute; animation: float 3s ease-in-out infinite; opacity: 0.5; }
     
-    .letter-paragraph {
-      opacity: 0;
-      animation: fadeInUp 0.8s ease-out forwards;
-    }
+    /* Wordle */
+    .wordle-grid { display: grid; grid-template-rows: repeat(6, 1fr); gap: 5px; margin-bottom: 15px; }
+    .wordle-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
+    .wordle-cell { width: 50px; height: 50px; border: 2px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: bold; text-transform: uppercase; background: #fff; transition: all 0.3s; }
+    .wordle-cell.correct { background: #22c55e; color: #fff; border-color: #22c55e; }
+    .wordle-cell.present { background: #eab308; color: #fff; border-color: #eab308; }
+    .wordle-cell.absent { background: #6b7280; color: #fff; border-color: #6b7280; }
+    .wordle-cell.filled { border-color: #666; animation: popIn 0.1s ease-out; }
+    .keyboard { display: flex; flex-direction: column; gap: 5px; }
+    .keyboard-row { display: flex; justify-content: center; gap: 4px; }
+    .key { padding: 10px 12px; background: #e5e5e5; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 14px; transition: all 0.1s; }
+    .key:hover { background: #d0d0d0; transform: scale(1.1); }
+    .key.wide { padding: 10px 15px; font-size: 11px; }
     
-    .confetti-piece {
-      position: fixed;
-      animation: confetti 3s ease-out forwards;
-      pointer-events: none;
-      z-index: 1000;
-    }
+    /* Connections */
+    .connections-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 400px; margin-bottom: 15px; }
+    .conn-tile { padding: 12px 8px; background: #fff; border: 2px solid #ccc; font-size: 11px; font-weight: bold; text-align: center; cursor: pointer; transition: all 0.2s; min-height: 50px; display: flex; align-items: center; justify-content: center; }
+    .conn-tile:hover { border-color: #666; transform: scale(1.03); }
+    .conn-tile.selected { background: #374151; color: #fff; border-color: #374151; }
+    .solved-group { padding: 12px; border-radius: 6px; text-align: center; margin-bottom: 8px; animation: popIn 0.3s ease-out; }
+    .solved-group.yellow { background: #facc15; }
+    .solved-group.blue { background: #60a5fa; }
+    .solved-group.green { background: #22c55e; }
+    .solved-group.purple { background: #a855f7; }
     
-    .strikethrough {
-      position: relative;
-    }
-    .strikethrough::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      width: 100%;
-      height: 3px;
-      background: black;
-      animation: typewriter 1s ease-out forwards;
-    }
+    /* Crossword */
+    .crossword-container { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    @media (min-width: 800px) { .crossword-container { flex-direction: row; align-items: flex-start; } }
+    .crossword-grid { display: grid; gap: 1px; background: #000; padding: 1px; }
+    .cross-cell { width: 26px; height: 26px; background: #fff; position: relative; }
+    .cross-cell.black { background: #1a1a1a; }
+    .cross-cell input { width: 100%; height: 100%; border: none; text-align: center; font-weight: bold; font-size: 14px; text-transform: uppercase; background: transparent; }
+    .cross-cell input:focus { outline: 2px solid #3b82f6; }
+    .cross-cell .num { position: absolute; top: 1px; left: 2px; font-size: 9px; line-height: 1; }
+    .cross-cell.correct input { color: #22c55e; }
+    .clues { font-size: 13px; max-width: 280px; }
+    .clues h4 { font-size: 16px; margin-bottom: 8px; }
+    .clues p { margin-bottom: 6px; line-height: 1.4; }
+    
+    /* Letter */
+    .letter-container { max-width: 600px; border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 30px 0; margin-top: 20px; }
+    .letter-container p { margin-bottom: 16px; line-height: 1.7; font-size: 15px; }
+    
+    /* Confetti */
+    .confetti { position: fixed; width: 10px; height: 10px; top: -10px; animation: confettiFall 3s ease-out forwards; pointer-events: none; z-index: 1000; }
   </style>
 </head>
 <body>
-  <div id="root"></div>
+
+<!-- LANDING -->
+<div id="landing" class="screen active">
+  <div class="floating-el" style="top: 10%; left: 8%; font-size: 24px;">✧</div>
+  <div class="floating-el" style="top: 15%; right: 12%; font-size: 18px; animation-delay: 0.5s;">♡</div>
+  <div class="floating-el" style="bottom: 15%; left: 10%; font-size: 20px; animation-delay: 1s;">✦</div>
+  <div class="floating-el" style="bottom: 10%; right: 8%; font-size: 16px; animation-delay: 1.5s;">✧</div>
   
-  <script type="text/babel">
-    const { useState, useEffect, useRef } = React;
+  <div style="text-align: center; max-width: 400px;">
+    <p class="font-sans animate-fadeIn" style="font-size: 11px; letter-spacing: 3px; margin-bottom: 12px;">✦ SPECIAL BIRTHDAY EDITION ✦</p>
+    <h1 class="strikethrough animate-fadeIn" style="font-size: 28px; margin-bottom: 4px; animation-delay: 0.2s;">The New York Times</h1>
+    <h1 class="animate-fadeInUp" style="font-size: 36px; margin-bottom: 12px; animation-delay: 0.4s;">The Sujju Gazette</h1>
+    <div class="animate-fadeIn" style="height: 1px; background: #000; margin-bottom: 12px; animation-delay: 0.6s;"></div>
+    <p class="font-sans animate-fadeIn" style="font-size: 12px; margin-bottom: 20px; animation-delay: 0.8s;">FEBRUARY 12, 2025 — CELEBRATING SRUJANA RACHURI</p>
+    
+    <div class="photo-frame animate-fadeInUp" style="width: 200px; height: 260px; margin: 0 auto 20px; animation-delay: 1s;">
+      <img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/landing.jpg" alt="Srujana">
+    </div>
+    
+    <p class="animate-fadeIn" style="font-style: italic; margin-bottom: 20px; animation-delay: 1.2s;">"Sujjulala, Sujju, Rachuri, and the love of my life"</p>
+    
+    <button class="btn animate-fadeInUp animate-pulse" style="animation-delay: 1.4s;" onclick="goTo('wordle')">BEGIN THE GAMES ✦</button>
+  </div>
+</div>
 
-    const IMAGES = {
-      landing: 'https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/landing.jpg',
-      afterWordle: 'https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/wordle.jpg',
-      afterConnections: 'https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/connections.jpg',
-      afterCrossword: 'https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/ITC.jpg',
-      letterOld: 'https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/throwback.jpg',
-      letterNew: 'https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/stairs.jpg',
-    };
+<!-- WORDLE -->
+<div id="wordle" class="screen">
+  <h2 class="animate-fadeInUp" style="font-size: 32px; margin-bottom: 8px;">Wordle</h2>
+  <p class="font-sans animate-fadeIn" style="font-size: 14px; color: #666; margin-bottom: 8px;">Guess the 5-letter word</p>
+  <p id="wordle-hint" class="animate-fadeIn" style="font-style: italic; font-size: 14px; margin-bottom: 15px; display: none;">Hint: International Udupi</p>
+  
+  <div id="wordle-grid" class="wordle-grid"></div>
+  
+  <div id="wordle-keyboard" class="keyboard"></div>
+  
+  <div id="wordle-result" style="text-align: center; margin-top: 20px; display: none;">
+    <p style="font-size: 24px; margin-bottom: 8px;"></p>
+    <p style="font-size: 14px; font-style: italic; color: #666; margin-bottom: 15px;">International Udupi, indeed. ✨</p>
+    <button class="btn" onclick="goTo('photo1')">Continue →</button>
+  </div>
+</div>
 
-    // Confetti component
-    const Confetti = ({ count = 50 }) => {
-      const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8'];
-      const pieces = Array.from({ length: count }, (_, i) => ({
-        id: i,
-        left: Math.random() * 100,
-        delay: Math.random() * 2,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        size: Math.random() * 10 + 5,
-      }));
+<!-- PHOTO 1 -->
+<div id="photo1" class="screen">
+  <div class="photo-frame animate-fadeInUp" style="width: 280px; height: 360px;">
+    <img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/wordle.jpg" alt="">
+  </div>
+  <button class="btn" style="margin-top: 25px;" onclick="goTo('connections')">Continue →</button>
+</div>
+
+<!-- CONNECTIONS -->
+<div id="connections" class="screen">
+  <h2 class="animate-fadeInUp" style="font-size: 32px; margin-bottom: 8px;">Connections</h2>
+  <p class="font-sans animate-fadeIn" style="font-size: 14px; color: #666; margin-bottom: 8px;">Find four groups of four</p>
+  <div id="conn-mistakes" style="display: flex; gap: 5px; margin-bottom: 15px;"></div>
+  
+  <div id="conn-solved"></div>
+  <div id="conn-grid" class="connections-grid"></div>
+  
+  <div id="conn-buttons" style="display: flex; gap: 10px; margin-top: 10px;">
+    <button class="btn" style="background: #fff; color: #000; border: 1px solid #000;" onclick="connShuffle()">Shuffle</button>
+    <button class="btn" style="background: #fff; color: #000; border: 1px solid #000;" onclick="connClear()">Clear</button>
+    <button class="btn" onclick="connSubmit()">Submit</button>
+  </div>
+  
+  <div id="conn-result" style="text-align: center; margin-top: 20px; display: none;">
+    <p style="font-size: 24px; margin-bottom: 15px;"></p>
+    <button class="btn" onclick="goTo('photo2')">Continue →</button>
+  </div>
+</div>
+
+<!-- PHOTO 2 -->
+<div id="photo2" class="screen">
+  <div class="photo-frame animate-fadeInUp" style="width: 280px; height: 360px;">
+    <img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/connections.jpg" alt="">
+  </div>
+  <button class="btn" style="margin-top: 25px;" onclick="goTo('crossword')">Continue →</button>
+</div>
+
+<!-- CROSSWORD -->
+<div id="crossword" class="screen" style="justify-content: flex-start; padding-top: 30px;">
+  <h2 class="animate-fadeInUp" style="font-size: 32px; margin-bottom: 8px;">Crossword</h2>
+  <p class="font-sans animate-fadeIn" style="font-size: 14px; color: #666; margin-bottom: 20px;">All about Sujju ✨</p>
+  
+  <div class="crossword-container">
+    <div id="cross-grid" class="crossword-grid"></div>
+    <div class="clues">
+      <div style="margin-bottom: 20px;">
+        <h4>Across</h4>
+        <p><strong>1.</strong> Her eternal nemesis in beverage form</p>
+        <p><strong>5.</strong> SPF? Never heard of her</p>
+        <p><strong>7.</strong> "So... neglected hot coffee?"</p>
+        <p><strong>9.</strong> The Abu Dhabi airport heartbreak</p>
+        <p><strong>11.</strong> The contested "first meeting"</p>
+      </div>
+      <div>
+        <h4>Down</h4>
+        <p><strong>2.</strong> The annual ritual, August edition, ITC</p>
+        <p><strong>3.</strong> Third wheel, professional grade</p>
+        <p><strong>4.</strong> ₹10 and a dream</p>
+        <p><strong>6.</strong> First time screaming in a crowd, together, in the rain</p>
+        <p><strong>8.</strong> It's a loser's choice, but I secretly love it</p>
+        <p><strong>10.</strong> Hum ne toh jab, kaliyan maangi</p>
+      </div>
+    </div>
+  </div>
+  
+  <button class="btn" style="margin-top: 25px;" onclick="goTo('photo3')">Continue to Letter →</button>
+</div>
+
+<!-- PHOTO 3 -->
+<div id="photo3" class="screen">
+  <div class="photo-frame animate-fadeInUp" style="width: 280px; height: 360px;">
+    <img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/ITC.jpg" alt="">
+  </div>
+  <button class="btn" style="margin-top: 25px;" onclick="goTo('letter')">Continue →</button>
+</div>
+
+<!-- LETTER -->
+<div id="letter" class="screen" style="justify-content: flex-start; padding: 40px 20px;">
+  <div style="display: flex; gap: 15px; margin-bottom: 10px;">
+    <div class="photo-frame" style="width: 150px; height: 190px;">
+      <img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/throwback.jpg" alt="2016">
+    </div>
+    <div class="photo-frame" style="width: 150px; height: 190px;">
+      <img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/stairs.jpg" alt="Now">
+    </div>
+  </div>
+  
+  <div class="letter-container">
+    <h2 style="text-align: center; font-size: 26px; margin-bottom: 25px;">A Letter for You</h2>
+    
+    <p><strong style="font-size: 18px;">Srujana,</strong></p>
+    
+    <p>Writing a letter for you is the most humiliating process. I cannot write like you do, I cannot express the way you can, I cannot process my thoughts into words that beautifully come together the way you manage to do so effortlessly. What can I do then except be intentional. So that's what this is. An intentional note that hopefully tells you how incomplete my life has been without you in it.</p>
+    
+    <p>Papa, any big, important, life-changing moments that have ever happened, has always had you around ready for me like one warm blanket to hide inside when things feel too scary. And when I was thinking of suitable examples, the first memory that pops up is when on a rainy, shitty day in Bangalore, I came home to you right after therapy. I had spoken to Bandita about how someone in office told me, "You always look like you're on the verge of tears". This was just after someone asked me what my name was, and I barely managed to whisper "Saranya". I felt so ashamed of not even being able to say my name with confidence. And then I came home to you, and you were just wrapping up some work. I plopped myself on the sofa, looking for songs to play. But I could barely contain myself, I just wanted to cry. And then, you finished work and came out of the room in tears. I don't even remember what had happened, but all I wanted was to cry with you. Srujana, I have no bigger relief than in being able to cry with you. And then of course, say "fine" a million times not fully convinced anything is ever fine.</p>
+    
+    <p>I keep wanting to be in two places at once. I can be in a new city, a new café, surrounded by new people, doing all the right things and still, all I want is to be with you, at home, drinking shitty chai and not needing anything else (other than a cigarette, maybe).</p>
+    
+    <p>I once read an astronaut write about how when she was on Earth, she longed for space, and when she was finally there, she only wanted to come back home. That kind of longing made sense to me immediately. Desire is so strange bro, it convinces us to chase distance, until we realise what we were really tethered to.</p>
+    
+    <p>Home, for me, was never a place. It has always been you papa. It's the ease of being with you, the quiet understanding, the way the world feels less demanding when we're together.</p>
+    
+    <p>Now, in this cold, grey city of London, I walk around feeling slightly (very) misplaced, carrying this constant heaviness of wanting to return not to a city or a room, but to us. And while you may think that this is a stretch, I will see you in a week with receipts from endless texts to others about how earnestly I feel about this.</p>
+    
+    <p>I came across this poem a while back, and when I sit to think of what I want to say to you, I thought this deserved a call back. It talks about carrying things long after we are told we should have outgrown them. A random girl who I thought was my best friend in school once told me "you breath so loudly, it's very irritating" and believe me when I say it, I have ever since been painfully aware of the way I breathe. Surviving doesn't always look brave, sometimes it just looks like getting through the day without hardening. I see that kind of survival in you. In the way you learned to keep going without losing your softness. In the way we still feel things deeply, even when it would be easier not to. And the best part is, you've always understood that about me - that I don't want to be made tougher, I just want to be made steady. With you, I don't have to pretend I've moved on from the parts of me that still annoy. I don't have to explain why certain days feel heavier, or why distance feels louder than it should. You've never asked me to be less sensitive, less emotional, less lonely. And that, more than anything, is why being away from you feels like carrying my heart outside my body.</p>
+    
+    <p>Which is why, I firmly believe that we are in need or urgent fixing and I am just glad Harshita is getting married so I have an early excuse to come home. More than anything, there's a lightness in knowing that in a week, distance will stop being theoretical and start being reachable. That I'll get to sit across from you, steal your time, and let my nervous system remember what safety feels like. I can't wait to sing again with you; it will do a lot more fixing than anything else ever really can. So in ten days exactly, be ready to belt Aji Rooth Kar again, badly and unapologetically. Until then, happy birthday, Rachuri. Peace out.</p>
+    
+    <p style="margin-top: 30px;">Lots of love,<br><strong>Shanpa</strong></p>
+  </div>
+  
+  <p class="animate-heartBeat" style="font-size: 24px; margin-top: 30px; text-align: center;">Happy Birthday, Sujju ♡</p>
+  <p style="font-size: 13px; color: #888; margin-top: 10px;">Made with love from London</p>
+</div>
+
+<script>
+// Navigation
+function goTo(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  window.scrollTo(0, 0);
+  
+  if (screenId === 'wordle') initWordle();
+  if (screenId === 'connections') initConnections();
+  if (screenId === 'crossword') initCrossword();
+}
+
+// Confetti
+function spawnConfetti() {
+  const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#DDA0DD'];
+  for (let i = 0; i < 50; i++) {
+    const conf = document.createElement('div');
+    conf.className = 'confetti';
+    conf.style.left = Math.random() * 100 + '%';
+    conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+    conf.style.animationDelay = Math.random() * 2 + 's';
+    conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+    document.body.appendChild(conf);
+    setTimeout(() => conf.remove(), 4000);
+  }
+}
+
+// ===== WORDLE =====
+const WORDLE_ANSWER = 'PARIS';
+let wordleGuesses = [];
+let wordleCurrent = '';
+let wordleGameOver = false;
+
+function initWordle() {
+  wordleGuesses = [];
+  wordleCurrent = '';
+  wordleGameOver = false;
+  renderWordleGrid();
+  renderWordleKeyboard();
+  document.getElementById('wordle-result').style.display = 'none';
+  document.getElementById('wordle-hint').style.display = 'none';
+  document.getElementById('wordle-keyboard').style.display = 'flex';
+}
+
+function renderWordleGrid() {
+  const grid = document.getElementById('wordle-grid');
+  grid.innerHTML = '';
+  for (let r = 0; r < 6; r++) {
+    const row = document.createElement('div');
+    row.className = 'wordle-row';
+    for (let c = 0; c < 5; c++) {
+      const cell = document.createElement('div');
+      cell.className = 'wordle-cell';
+      cell.id = `wc-${r}-${c}`;
       
-      return (
-        <div className="fixed inset-0 pointer-events-none overflow-hidden z-50">
-          {pieces.map(p => (
-            <div
-              key={p.id}
-              className="confetti-piece"
-              style={{
-                left: `${p.left}%`,
-                top: '100%',
-                width: p.size,
-                height: p.size,
-                backgroundColor: p.color,
-                borderRadius: Math.random() > 0.5 ? '50%' : '0',
-                animationDelay: `${p.delay}s`,
-              }}
-            />
-          ))}
-        </div>
-      );
-    };
-
-    // Landing Page
-    const LandingPage = ({ onStart }) => {
-      const [loaded, setLoaded] = useState(false);
-      useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
-
-      return (
-        <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 flex flex-col items-center justify-center p-6 text-center overflow-hidden">
-          <div className={`max-w-lg transition-all duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`}>
-            <p className="text-xs tracking-widest mb-3 font-sans animate-fadeIn" style={{animationDelay: '0.2s', opacity: 0, animationFillMode: 'forwards'}}>
-              ✦ SPECIAL BIRTHDAY EDITION ✦
-            </p>
-            
-            <div className="relative mb-2">
-              <h1 className="text-4xl md:text-5xl font-bold font-serif strikethrough animate-fadeIn" style={{animationDelay: '0.4s', opacity: 0, animationFillMode: 'forwards'}}>
-                The New York Times
-              </h1>
-            </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold font-serif mb-4 animate-fadeInUp" style={{animationDelay: '0.8s', opacity: 0, animationFillMode: 'forwards'}}>
-              The Sujju Gazette
-            </h1>
-            
-            <div className="w-full h-px bg-black mb-4 animate-fadeIn" style={{animationDelay: '1s', opacity: 0, animationFillMode: 'forwards'}}></div>
-            
-            <p className="text-sm mb-6 font-sans animate-fadeIn" style={{animationDelay: '1.2s', opacity: 0, animationFillMode: 'forwards'}}>
-              FEBRUARY 12, 2025 — CELEBRATING SRUJANA RACHURI
-            </p>
-            
-            <div className="w-64 h-80 mx-auto mb-6 bg-gray-100 border-2 border-black overflow-hidden photo-frame animate-fadeInUp animate-glow" style={{animationDelay: '1.4s', opacity: 0, animationFillMode: 'forwards'}}>
-              <img src={IMAGES.landing} alt="Srujana" className="w-full h-full object-cover" style={{filter: 'grayscale(100%)'}} />
-            </div>
-            
-            <p className="text-lg italic mb-6 font-serif animate-fadeIn" style={{animationDelay: '1.6s', opacity: 0, animationFillMode: 'forwards'}}>
-              "Sujjulala, Sujju, Rachuri, and the love of my life"
-            </p>
-            
-            <button
-              onClick={onStart}
-              className="shimmer-btn text-amber-50 px-8 py-3 text-lg tracking-wide font-sans rounded-sm hover:scale-105 transition-transform animate-fadeInUp animate-pulse-slow"
-              style={{animationDelay: '1.8s', opacity: 0, animationFillMode: 'forwards'}}
-            >
-              BEGIN THE GAMES ✦
-            </button>
-          </div>
-          
-          <div className="absolute top-10 left-10 text-4xl animate-float" style={{animationDelay: '0s'}}>✧</div>
-          <div className="absolute top-20 right-20 text-2xl animate-float" style={{animationDelay: '0.5s'}}>♡</div>
-          <div className="absolute bottom-20 left-20 text-3xl animate-float" style={{animationDelay: '1s'}}>✦</div>
-          <div className="absolute bottom-10 right-10 text-2xl animate-float" style={{animationDelay: '1.5s'}}>✧</div>
-        </div>
-      );
-    };
-
-    // Wordle
-    const Wordle = ({ onComplete }) => {
-      const answer = 'PARIS';
-      const [guesses, setGuesses] = useState([]);
-      const [current, setCurrent] = useState('');
-      const [gameOver, setGameOver] = useState(false);
-      const [won, setWon] = useState(false);
-      const [showHint, setShowHint] = useState(false);
-      const [showConfetti, setShowConfetti] = useState(false);
-      const [shake, setShake] = useState(false);
-
-      const handleKey = (key) => {
-        if (gameOver) return;
-        if (key === 'ENTER' && current.length === 5) {
-          const newGuesses = [...guesses, current];
-          setGuesses(newGuesses);
-          if (current === answer) {
-            setWon(true);
-            setGameOver(true);
-            setShowConfetti(true);
-          } else if (newGuesses.length >= 6) {
-            setGameOver(true);
-          } else {
-            setShake(true);
-            setTimeout(() => setShake(false), 500);
-          }
-          setCurrent('');
-        } else if (key === 'DEL') {
-          setCurrent(c => c.slice(0, -1));
-        } else if (current.length < 5 && /^[A-Z]$/.test(key)) {
-          setCurrent(c => c + key);
-        }
-      };
-
-      useEffect(() => {
-        const handler = (e) => {
-          if (e.key === 'Enter') handleKey('ENTER');
-          else if (e.key === 'Backspace') handleKey('DEL');
-          else if (/^[a-zA-Z]$/.test(e.key)) handleKey(e.key.toUpperCase());
-        };
-        window.addEventListener('keydown', handler);
-        return () => window.removeEventListener('keydown', handler);
-      }, [current, gameOver, guesses]);
-
-      const getColor = (letter, idx, guess) => {
-        if (answer[idx] === letter) return 'bg-green-600 text-white border-green-600';
-        if (answer.includes(letter)) return 'bg-yellow-500 text-white border-yellow-500';
-        return 'bg-gray-500 text-white border-gray-500';
-      };
-
-      const keyboard = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
-
-      return (
-        <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 flex flex-col items-center justify-center p-4">
-          {showConfetti && <Confetti />}
-          
-          <h2 className="text-4xl font-bold mb-2 font-serif animate-fadeInUp">Wordle</h2>
-          <p className="text-sm mb-4 text-gray-600 font-sans animate-fadeIn">Guess the 5-letter word</p>
-          
-          {!showHint && !gameOver && guesses.length >= 2 && (
-            <button onClick={() => setShowHint(true)} className="text-sm underline mb-4 text-gray-600 hover:text-black transition animate-pulse-slow">
-              ✨ Need a hint?
-            </button>
-          )}
-          {showHint && <p className="text-sm italic mb-4 font-serif animate-popIn">Hint: International Udupi</p>}
-          
-          <div className={`grid grid-rows-6 gap-1 mb-6 ${shake ? 'animate-wiggle' : ''}`}>
-            {[...Array(6)].map((_, rowIdx) => (
-              <div key={rowIdx} className="grid grid-cols-5 gap-1">
-                {[...Array(5)].map((_, colIdx) => {
-                  const guess = guesses[rowIdx];
-                  const letter = guess ? guess[colIdx] : (rowIdx === guesses.length ? current[colIdx] : '');
-                  const isRevealed = !!guess;
-                  const colorClass = guess ? getColor(guess[colIdx], colIdx, guess) : 'bg-white border-gray-300';
-                  return (
-                    <div 
-                      key={colIdx} 
-                      className={`w-12 h-12 border-2 flex items-center justify-center text-xl font-bold tile-flip ${colorClass} ${letter && !guess ? 'animate-popIn border-gray-500' : ''}`}
-                      style={isRevealed ? { animationDelay: `${colIdx * 0.1}s` } : {}}
-                    >
-                      {letter}
-                    </div>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
-
-          {!gameOver && (
-            <div className="flex flex-col items-center gap-1">
-              {keyboard.map((row, i) => (
-                <div key={i} className="flex gap-1">
-                  {i === 2 && (
-                    <button onClick={() => handleKey('ENTER')} className="px-2 py-3 bg-gray-300 rounded text-xs font-bold hover:bg-gray-400 transition">
-                      ENTER
-                    </button>
-                  )}
-                  {row.split('').map(k => (
-                    <button 
-                      key={k} 
-                      onClick={() => handleKey(k)} 
-                      className="w-8 h-10 bg-gray-200 rounded font-bold text-sm hover:bg-gray-300 hover:scale-110 transition-all"
-                    >
-                      {k}
-                    </button>
-                  ))}
-                  {i === 2 && (
-                    <button onClick={() => handleKey('DEL')} className="px-2 py-3 bg-gray-300 rounded text-xs font-bold hover:bg-gray-400 transition">
-                      DEL
-                    </button>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-
-          {gameOver && (
-            <div className="text-center mt-4 animate-fadeInUp">
-              <p className="text-2xl mb-2 font-serif">{won ? '🎉 Brilliant!' : `The word was ${answer}`}</p>
-              <p className="text-sm italic text-gray-600 mb-4 font-serif">International Udupi, indeed. ✨</p>
-              <button 
-                onClick={onComplete} 
-                className="shimmer-btn text-amber-50 px-6 py-2 font-sans rounded-sm hover:scale-105 transition-transform"
-              >
-                Continue →
-              </button>
-            </div>
-          )}
-        </div>
-      );
-    };
-
-    // Photo Interstitial
-    const PhotoPage = ({ imageKey, onContinue }) => {
-      const [loaded, setLoaded] = useState(false);
-      useEffect(() => { setTimeout(() => setLoaded(true), 100); }, []);
-
-      return (
-        <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 flex flex-col items-center justify-center p-6">
-          <div className={`w-72 h-96 bg-gray-100 border-2 border-black overflow-hidden photo-frame transition-all duration-700 ${loaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-            <img src={IMAGES[imageKey]} alt="" className="w-full h-full object-cover" style={{filter: 'grayscale(100%)'}} />
-          </div>
-          <button 
-            onClick={onContinue} 
-            className={`mt-6 shimmer-btn text-amber-50 px-6 py-2 font-sans rounded-sm hover:scale-105 transition-all duration-500 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
-            style={{transitionDelay: '0.3s'}}
-          >
-            Continue →
-          </button>
-        </div>
-      );
-    };
-
-    // Connections
-    const Connections = ({ onComplete }) => {
-      const categories = [
-        { name: 'Foods that will always be our thing', words: ['PEANUT PODI', 'COFFEE', 'ALOO PARATHA', 'ALOO FRY'], color: 'bg-yellow-400' },
-        { name: 'Rangeen shaam, Bangalore ke naam', words: ['LAVONNE', 'ITC', 'NERLU', 'SODA BOTTLE'], color: 'bg-blue-400' },
-        { name: 'Places we made "our home"', words: ['HAPPY HOMES', 'DODDA BANASWADI', 'INDIRANAGAR-ISH', 'WHITEFIELD'], color: 'bg-green-500' },
-        { name: 'Personality-defining things she loves', words: ['CATS', 'AGATHA CHRISTIE', 'SRK', 'HARRY POTTER'], color: 'bg-purple-500' },
-      ];
-
-      const allWords = categories.flatMap(c => c.words);
-      const [shuffled, setShuffled] = useState([]);
-      const [selected, setSelected] = useState([]);
-      const [solved, setSolved] = useState([]);
-      const [mistakes, setMistakes] = useState(0);
-      const [gameOver, setGameOver] = useState(false);
-      const [showConfetti, setShowConfetti] = useState(false);
-      const [wrongGuess, setWrongGuess] = useState(false);
-
-      useEffect(() => {
-        setShuffled([...allWords].sort(() => Math.random() - 0.5));
-      }, []);
-
-      const handleSelect = (word) => {
-        if (solved.some(c => c.words.includes(word))) return;
-        if (selected.includes(word)) {
-          setSelected(selected.filter(w => w !== word));
-        } else if (selected.length < 4) {
-          setSelected([...selected, word]);
-        }
-      };
-
-      const handleSubmit = () => {
-        if (selected.length !== 4) return;
-        const match = categories.find(c => 
-          c.words.every(w => selected.includes(w)) && !solved.includes(c)
-        );
-        if (match) {
-          const newSolved = [...solved, match];
-          setSolved(newSolved);
-          setSelected([]);
-          if (newSolved.length === 4) {
-            setGameOver(true);
-            setShowConfetti(true);
-          }
-        } else {
-          setMistakes(m => m + 1);
-          setWrongGuess(true);
-          setTimeout(() => setWrongGuess(false), 500);
-          if (mistakes >= 3) setGameOver(true);
-        }
-      };
-
-      const remainingWords = shuffled.filter(w => !solved.some(c => c.words.includes(w)));
-
-      return (
-        <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 flex flex-col items-center justify-center p-4">
-          {showConfetti && <Confetti />}
-          
-          <h2 className="text-4xl font-bold mb-2 font-serif animate-fadeInUp">Connections</h2>
-          <p className="text-sm mb-4 text-gray-600 font-sans animate-fadeIn">Find four groups of four</p>
-          
-          <div className="flex gap-1 mb-4">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className={`w-3 h-3 rounded-full transition-all ${i < mistakes ? 'bg-red-500' : 'bg-gray-300'}`} />
-            ))}
-          </div>
-
-          <div className="w-full max-w-md">
-            {solved.map((cat, i) => (
-              <div key={i} className={`${cat.color} p-3 rounded mb-2 text-center animate-popIn`} style={{animationDelay: `${i * 0.1}s`}}>
-                <p className="font-bold text-sm">{cat.name}</p>
-                <p className="text-xs mt-1">{cat.words.join(' • ')}</p>
-              </div>
-            ))}
-
-            <div className={`grid grid-cols-4 gap-2 mb-4 ${wrongGuess ? 'animate-wiggle' : ''}`}>
-              {remainingWords.map((word, i) => (
-                <button
-                  key={word}
-                  onClick={() => handleSelect(word)}
-                  className={`p-2 text-xs font-bold rounded border-2 transition-all tile-flip ${
-                    selected.includes(word) 
-                      ? 'bg-gray-700 text-white border-gray-700 scale-95' 
-                      : 'bg-white border-gray-300 hover:border-gray-500 hover:shadow-md'
-                  }`}
-                  style={{minHeight: '55px', animationDelay: `${i * 0.05}s`}}
-                >
-                  {word}
-                </button>
-              ))}
-            </div>
-
-            {!gameOver && solved.length < 4 && (
-              <div className="flex gap-2 justify-center">
-                <button 
-                  onClick={() => setSelected([])} 
-                  className="px-4 py-2 border border-black rounded hover:bg-gray-100 transition font-sans"
-                >
-                  Clear
-                </button>
-                <button 
-                  onClick={() => setShuffled([...remainingWords].sort(() => Math.random() - 0.5))} 
-                  className="px-4 py-2 border border-black rounded hover:bg-gray-100 transition font-sans"
-                >
-                  Shuffle
-                </button>
-                <button 
-                  onClick={handleSubmit} 
-                  disabled={selected.length !== 4} 
-                  className="px-4 py-2 bg-black text-white rounded disabled:opacity-30 hover:bg-gray-800 transition font-sans"
-                >
-                  Submit
-                </button>
-              </div>
-            )}
-
-            {gameOver && (
-              <div className="text-center mt-4 animate-fadeInUp">
-                <p className="text-2xl mb-4 font-serif">{solved.length === 4 ? '🎉 Perfect!' : 'Nice try!'}</p>
-                <button 
-                  onClick={onComplete} 
-                  className="shimmer-btn text-amber-50 px-6 py-2 font-sans rounded-sm hover:scale-105 transition-transform"
-                >
-                  Continue →
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      );
-    };
-
-    // Crossword
-    const Crossword = ({ onComplete }) => {
-      const clues = {
-        across: [
-          { num: 1, clue: 'Her eternal nemesis in beverage form', answer: 'CHAI', row: 0, col: 0 },
-          { num: 5, clue: 'SPF? Never heard of her', answer: 'SUNSCREEN', row: 2, col: 0 },
-          { num: 7, clue: '"So... neglected hot coffee?"', answer: 'ICEDCOFFEE', row: 4, col: 0 },
-          { num: 9, clue: 'The Abu Dhabi airport heartbreak', answer: 'OMANCHIPS', row: 6, col: 1 },
-          { num: 11, clue: 'The contested "first meeting"', answer: 'GVM', row: 8, col: 3 },
-        ],
-        down: [
-          { num: 2, clue: 'The annual ritual, August edition, ITC', answer: 'OMSHANTOM', row: 0, col: 2 },
-          { num: 3, clue: 'Third wheel, professional grade', answer: 'VEEKSHITH', row: 0, col: 6 },
-          { num: 4, clue: '₹10 and a dream', answer: 'BREADPAKODA', row: 1, col: 4 },
-          { num: 6, clue: 'First time screaming in a crowd, together, in the rain', answer: 'PENNMASALA', row: 2, col: 8 },
-          { num: 8, clue: "It's a loser's choice, but I secretly love it", answer: 'MINTCHIP', row: 5, col: 0 },
-          { num: 10, clue: 'Hum ne toh jab, kaliyan maangi', answer: 'PYAASA', row: 6, col: 5 },
-        ],
-      };
-
-      const gridSize = 12;
-      const [grid, setGrid] = useState({});
-      const [solved, setSolved] = useState(false);
-      const [showConfetti, setShowConfetti] = useState(false);
-
-      const getCellKey = (r, c) => `${r}-${c}`;
-
-      const cellMap = {};
-      [...clues.across, ...clues.down].forEach(clue => {
-        const isAcross = clues.across.includes(clue);
-        for (let i = 0; i < clue.answer.length; i++) {
-          const r = isAcross ? clue.row : clue.row + i;
-          const c = isAcross ? clue.col + i : clue.col;
-          const key = getCellKey(r, c);
-          if (!cellMap[key]) cellMap[key] = { letter: clue.answer[i], num: i === 0 ? clue.num : null };
-          else if (i === 0 && !cellMap[key].num) cellMap[key].num = clue.num;
-        }
-      });
-
-      const handleInput = (r, c, val) => {
-        const key = getCellKey(r, c);
-        const newGrid = { ...grid, [key]: val.toUpperCase().slice(-1) };
-        setGrid(newGrid);
-        
-        let allCorrect = true;
-        Object.keys(cellMap).forEach(k => {
-          if (newGrid[k] !== cellMap[k].letter) allCorrect = false;
-        });
-        if (allCorrect && Object.keys(newGrid).length >= Object.keys(cellMap).length * 0.9) {
-          setSolved(true);
-          setShowConfetti(true);
-        }
-      };
-
-      return (
-        <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 flex flex-col items-center p-4 overflow-auto">
-          {showConfetti && <Confetti />}
-          
-          <h2 className="text-4xl font-bold mb-2 font-serif animate-fadeInUp">Crossword</h2>
-          <p className="text-sm mb-6 text-gray-600 font-sans animate-fadeIn">All about Sujju ✨</p>
-
-          <div className="flex flex-col lg:flex-row gap-8 items-start">
-            <div 
-              className="grid gap-px bg-black p-px animate-fadeIn" 
-              style={{ gridTemplateColumns: `repeat(${gridSize}, 26px)` }}
-            >
-              {[...Array(gridSize)].map((_, r) =>
-                [...Array(gridSize)].map((_, c) => {
-                  const key = getCellKey(r, c);
-                  const cell = cellMap[key];
-                  if (!cell) return <div key={key} className="w-6 h-6 bg-gray-800" />;
-                  const isCorrect = grid[key] === cell.letter;
-                  return (
-                    <div key={key} className={`w-6 h-6 bg-white relative transition-colors ${isCorrect ? 'bg-green-100' : ''}`}>
-                      {cell.num && <span className="absolute top-0 left-0.5 text-xs leading-none">{cell.num}</span>}
-                      <input
-                        type="text"
-                        maxLength={1}
-                        value={grid[key] || ''}
-                        onChange={(e) => handleInput(r, c, e.target.value)}
-                        className={`w-full h-full text-center font-bold text-sm uppercase bg-transparent outline-none ${isCorrect ? 'text-green-700' : ''}`}
-                        style={{caretColor: 'black'}}
-                      />
-                    </div>
-                  );
-                })
-              )}
-            </div>
-
-            <div className="text-sm max-w-xs animate-slideInRight">
-              <div className="mb-6">
-                <p className="font-bold mb-2 text-lg">Across</p>
-                {clues.across.map(c => (
-                  <p key={c.num} className="mb-2 leading-snug">
-                    <strong>{c.num}.</strong> {c.clue}
-                  </p>
-                ))}
-              </div>
-              <div>
-                <p className="font-bold mb-2 text-lg">Down</p>
-                {clues.down.map(c => (
-                  <p key={c.num} className="mb-2 leading-snug">
-                    <strong>{c.num}.</strong> {c.clue}
-                  </p>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {solved && (
-            <div className="text-center mt-8 animate-fadeInUp">
-              <p className="text-2xl mb-4 font-serif">🎉 Crossword Complete!</p>
-              <button 
-                onClick={onComplete} 
-                className="shimmer-btn text-amber-50 px-6 py-2 font-sans rounded-sm hover:scale-105 transition-transform"
-              >
-                Continue →
-              </button>
-            </div>
-          )}
-          
-          {!solved && (
-            <button 
-              onClick={onComplete} 
-              className="mt-8 text-sm underline text-gray-500 hover:text-gray-700 transition"
-            >
-              Skip to letter →
-            </button>
-          )}
-        </div>
-      );
-    };
-
-    // Letter Page
-    const LetterPage = () => {
-      const [visibleParagraphs, setVisibleParagraphs] = useState(0);
-      
-      useEffect(() => {
-        const timer = setInterval(() => {
-          setVisibleParagraphs(v => {
-            if (v >= 12) {
-              clearInterval(timer);
-              return v;
-            }
-            return v + 1;
-          });
-        }, 400);
-        return () => clearInterval(timer);
-      }, []);
-
-      const paragraphs = [
-        { text: "Srujana,", className: "font-bold text-xl" },
-        { text: "Writing a letter for you is the most humiliating process. I cannot write like you do, I cannot express the way you can, I cannot process my thoughts into words that beautifully come together the way you manage to do so effortlessly. What can I do then except be intentional. So that's what this is. An intentional note that hopefully tells you how incomplete my life has been without you in it." },
-        { text: "Papa, any big, important, life-changing moments that have ever happened, has always had you around ready for me like one warm blanket to hide inside when things feel too scary. And when I was thinking of suitable examples, the first memory that pops up is when on a rainy, shitty day in Bangalore, I came home to you right after therapy. I had spoken to Bandita about how someone in office told me, \"You always look like you're on the verge of tears\". This was just after someone asked me what my name was, and I barely managed to whisper \"Saranya\". I felt so ashamed of not even being able to say my name with confidence. And then I came home to you, and you were just wrapping up some work. I plopped myself on the sofa, looking for songs to play. But I could barely contain myself, I just wanted to cry. And then, you finished work and came out of the room in tears. I don't even remember what had happened, but all I wanted was to cry with you. Srujana, I have no bigger relief than in being able to cry with you. And then of course, say \"fine\" a million times not fully convinced anything is ever fine." },
-        { text: "I keep wanting to be in two places at once. I can be in a new city, a new café, surrounded by new people, doing all the right things and still, all I want is to be with you, at home, drinking shitty chai and not needing anything else (other than a cigarette, maybe)." },
-        { text: "I once read an astronaut write about how when she was on Earth, she longed for space, and when she was finally there, she only wanted to come back home. That kind of longing made sense to me immediately. Desire is so strange bro, it convinces us to chase distance, until we realise what we were really tethered to." },
-        { text: "Home, for me, was never a place. It has always been you papa. It's the ease of being with you, the quiet understanding, the way the world feels less demanding when we're together." },
-        { text: "Now, in this cold, grey city of London, I walk around feeling slightly (very) misplaced, carrying this constant heaviness of wanting to return not to a city or a room, but to us. And while you may think that this is a stretch, I will see you in a week with receipts from endless texts to others about how earnestly I feel about this." },
-        { text: "I came across this poem a while back, and when I sit to think of what I want to say to you, I thought this deserved a call back. It talks about carrying things long after we are told we should have outgrown them. A random girl who I thought was my best friend in school once told me \"you breath so loudly, it's very irritating\" and believe me when I say it, I have ever since been painfully aware of the way I breathe. Surviving doesn't always look brave, sometimes it just looks like getting through the day without hardening. I see that kind of survival in you. In the way you learned to keep going without losing your softness. In the way we still feel things deeply, even when it would be easier not to. And the best part is, you've always understood that about me - that I don't want to be made tougher, I just want to be made steady. With you, I don't have to pretend I've moved on from the parts of me that still annoy. I don't have to explain why certain days feel heavier, or why distance feels louder than it should. You've never asked me to be less sensitive, less emotional, less lonely. And that, more than anything, is why being away from you feels like carrying my heart outside my body." },
-        { text: "Which is why, I firmly believe that we are in need or urgent fixing and I am just glad Harshita is getting married so I have an early excuse to come home. More than anything, there's a lightness in knowing that in a week, distance will stop being theoretical and start being reachable. That I'll get to sit across from you, steal your time, and let my nervous system remember what safety feels like. I can't wait to sing again with you; it will do a lot more fixing than anything else ever really can. So in ten days exactly, be ready to belt Aji Rooth Kar again, badly and unapologetically. Until then, happy birthday, Rachuri. Peace out." },
-        { text: "Lots of love,\nShanpa", className: "mt-8 whitespace-pre-line" },
-      ];
-
-      return (
-        <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50 p-6 md:p-12">
-          <div className="max-w-2xl mx-auto">
-            <div className="flex gap-4 justify-center mb-8">
-              <div className="w-40 h-52 bg-gray-100 border-2 border-black overflow-hidden photo-frame animate-slideInLeft">
-                <img src={IMAGES.letterOld} alt="2016" className="w-full h-full object-cover" style={{filter: 'grayscale(100%)'}} />
-              </div>
-              <div className="w-40 h-52 bg-gray-100 border-2 border-black overflow-hidden photo-frame animate-slideInRight">
-                <img src={IMAGES.letterNew} alt="Now" className="w-full h-full object-cover" style={{filter: 'grayscale(100%)'}} />
-              </div>
-            </div>
-
-            <div className="border-t-2 border-b-2 border-black py-8 font-serif">
-              <h2 className="text-3xl font-bold mb-8 text-center animate-fadeIn">A Letter for You</h2>
-              
-              <div className="space-y-5 text-base leading-relaxed">
-                {paragraphs.map((p, i) => (
-                  <p 
-                    key={i} 
-                    className={`letter-paragraph ${p.className || ''}`}
-                    style={{
-                      animationDelay: `${i * 0.3}s`,
-                      opacity: visibleParagraphs > i ? 1 : 0,
-                    }}
-                  >
-                    {p.text}
-                  </p>
-                ))}
-              </div>
-            </div>
-            
-            <div className="text-center mt-10 animate-heartBeat" style={{animationDelay: '4s'}}>
-              <p className="text-2xl font-serif">Happy Birthday, Sujju ♡</p>
-              <p className="text-sm mt-4 text-gray-500">Made with love from London</p>
-            </div>
-          </div>
-        </div>
-      );
-    };
-
-    // Main App
-    function App() {
-      const [screen, setScreen] = useState('landing');
-
-      const screens = {
-        landing: <LandingPage onStart={() => setScreen('wordle')} />,
-        wordle: <Wordle onComplete={() => setScreen('photo1')} />,
-        photo1: <PhotoPage imageKey="afterWordle" onContinue={() => setScreen('connections')} />,
-        connections: <Connections onComplete={() => setScreen('photo2')} />,
-        photo2: <PhotoPage imageKey="afterConnections" onContinue={() => setScreen('crossword')} />,
-        crossword: <Crossword onComplete={() => setScreen('photo3')} />,
-        photo3: <PhotoPage imageKey="afterCrossword" onContinue={() => setScreen('letter')} />,
-        letter: <LetterPage />,
-      };
-
-      return <div className="bg-amber-50 min-h-screen">{screens[screen]}</div>;
+      if (r < wordleGuesses.length) {
+        const letter = wordleGuesses[r][c];
+        cell.textContent = letter;
+        if (WORDLE_ANSWER[c] === letter) cell.classList.add('correct');
+        else if (WORDLE_ANSWER.includes(letter)) cell.classList.add('present');
+        else cell.classList.add('absent');
+      } else if (r === wordleGuesses.length && c < wordleCurrent.length) {
+        cell.textContent = wordleCurrent[c];
+        cell.classList.add('filled');
+      }
+      row.appendChild(cell);
     }
+    grid.appendChild(row);
+  }
+}
 
-    ReactDOM.render(<App />, document.getElementById('root'));
-  </script>
+function renderWordleKeyboard() {
+  const kb = document.getElementById('wordle-keyboard');
+  kb.innerHTML = '';
+  const rows = ['QWERTYUIOP', 'ASDFGHJKL', 'ZXCVBNM'];
+  rows.forEach((row, i) => {
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'keyboard-row';
+    if (i === 2) {
+      const enter = document.createElement('button');
+      enter.className = 'key wide';
+      enter.textContent = 'ENTER';
+      enter.onclick = () => wordleKey('ENTER');
+      rowDiv.appendChild(enter);
+    }
+    row.split('').forEach(k => {
+      const key = document.createElement('button');
+      key.className = 'key';
+      key.textContent = k;
+      key.onclick = () => wordleKey(k);
+      rowDiv.appendChild(key);
+    });
+    if (i === 2) {
+      const del = document.createElement('button');
+      del.className = 'key wide';
+      del.textContent = 'DEL';
+      del.onclick = () => wordleKey('DEL');
+      rowDiv.appendChild(del);
+    }
+    kb.appendChild(rowDiv);
+  });
+}
+
+function wordleKey(key) {
+  if (wordleGameOver) return;
+  if (key === 'ENTER' && wordleCurrent.length === 5) {
+    wordleGuesses.push(wordleCurrent);
+    if (wordleCurrent === WORDLE_ANSWER) {
+      wordleGameOver = true;
+      renderWordleGrid();
+      spawnConfetti();
+      document.getElementById('wordle-keyboard').style.display = 'none';
+      const result = document.getElementById('wordle-result');
+      result.style.display = 'block';
+      result.querySelector('p').textContent = '🎉 Brilliant!';
+    } else if (wordleGuesses.length >= 6) {
+      wordleGameOver = true;
+      renderWordleGrid();
+      document.getElementById('wordle-keyboard').style.display = 'none';
+      const result = document.getElementById('wordle-result');
+      result.style.display = 'block';
+      result.querySelector('p').textContent = 'The word was ' + WORDLE_ANSWER;
+    } else {
+      wordleCurrent = '';
+      renderWordleGrid();
+      if (wordleGuesses.length >= 2) document.getElementById('wordle-hint').style.display = 'block';
+    }
+  } else if (key === 'DEL') {
+    wordleCurrent = wordleCurrent.slice(0, -1);
+    renderWordleGrid();
+  } else if (wordleCurrent.length < 5 && /^[A-Z]$/.test(key)) {
+    wordleCurrent += key;
+    renderWordleGrid();
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('wordle').classList.contains('active')) return;
+  if (e.key === 'Enter') wordleKey('ENTER');
+  else if (e.key === 'Backspace') wordleKey('DEL');
+  else if (/^[a-zA-Z]$/.test(e.key)) wordleKey(e.key.toUpperCase());
+});
+
+// ===== CONNECTIONS =====
+const CONN_CATEGORIES = [
+  { name: 'Foods that will always be our thing', words: ['PEANUT PODI', 'COFFEE', 'ALOO PARATHA', 'ALOO FRY'], color: 'yellow' },
+  { name: 'Rangeen shaam, Bangalore ke naam', words: ['LAVONNE', 'ITC', 'NERLU', 'SODA BOTTLE'], color: 'blue' },
+  { name: 'Places we made "our home"', words: ['HAPPY HOMES', 'DODDA BANASWADI', 'INDIRANAGAR-ISH', 'WHITEFIELD'], color: 'green' },
+  { name: 'Personality-defining things she loves', words: ['CATS', 'AGATHA CHRISTIE', 'SRK', 'HARRY POTTER'], color: 'purple' },
+];
+let connWords = [];
+let connSelected = [];
+let connSolved = [];
+let connMistakes = 0;
+
+function initConnections() {
+  connWords = CONN_CATEGORIES.flatMap(c => c.words).sort(() => Math.random() - 0.5);
+  connSelected = [];
+  connSolved = [];
+  connMistakes = 0;
+  renderConnections();
+  document.getElementById('conn-result').style.display = 'none';
+  document.getElementById('conn-buttons').style.display = 'flex';
+}
+
+function renderConnections() {
+  // Mistakes
+  const mist = document.getElementById('conn-mistakes');
+  mist.innerHTML = '';
+  for (let i = 0; i < 4; i++) {
+    const dot = document.createElement('div');
+    dot.style.cssText = `width: 12px; height: 12px; border-radius: 50%; background: ${i < connMistakes ? '#ef4444' : '#d1d5db'}; transition: background 0.3s;`;
+    mist.appendChild(dot);
+  }
+  
+  // Solved
+  const solvedDiv = document.getElementById('conn-solved');
+  solvedDiv.innerHTML = '';
+  connSolved.forEach(cat => {
+    const div = document.createElement('div');
+    div.className = `solved-group ${cat.color}`;
+    div.innerHTML = `<strong style="font-size: 13px;">${cat.name}</strong><br><span style="font-size: 11px;">${cat.words.join(' • ')}</span>`;
+    solvedDiv.appendChild(div);
+  });
+  
+  // Grid
+  const grid = document.getElementById('conn-grid');
+  grid.innerHTML = '';
+  const remaining = connWords.filter(w => !connSolved.some(c => c.words.includes(w)));
+  remaining.forEach(word => {
+    const tile = document.createElement('div');
+    tile.className = 'conn-tile' + (connSelected.includes(word) ? ' selected' : '');
+    tile.textContent = word;
+    tile.onclick = () => connSelect(word);
+    grid.appendChild(tile);
+  });
+  
+  if (connSolved.length === 4) {
+    document.getElementById('conn-buttons').style.display = 'none';
+    const result = document.getElementById('conn-result');
+    result.style.display = 'block';
+    result.querySelector('p').textContent = '🎉 Perfect!';
+    spawnConfetti();
+  }
+}
+
+function connSelect(word) {
+  if (connSelected.includes(word)) {
+    connSelected = connSelected.filter(w => w !== word);
+  } else if (connSelected.length < 4) {
+    connSelected.push(word);
+  }
+  renderConnections();
+}
+
+function connShuffle() {
+  const remaining = connWords.filter(w => !connSolved.some(c => c.words.includes(w)));
+  connWords = [...connSolved.flatMap(c => c.words), ...remaining.sort(() => Math.random() - 0.5)];
+  renderConnections();
+}
+
+function connClear() {
+  connSelected = [];
+  renderConnections();
+}
+
+function connSubmit() {
+  if (connSelected.length !== 4) return;
+  const match = CONN_CATEGORIES.find(c => c.words.every(w => connSelected.includes(w)) && !connSolved.includes(c));
+  if (match) {
+    connSolved.push(match);
+    connSelected = [];
+  } else {
+    connMistakes++;
+    if (connMistakes >= 4) {
+      document.getElementById('conn-buttons').style.display = 'none';
+      const result = document.getElementById('conn-result');
+      result.style.display = 'block';
+      result.querySelector('p').textContent = 'Nice try! 💛';
+    }
+  }
+  renderConnections();
+}
+
+// ===== CROSSWORD =====
+const CROSS_CLUES = {
+  across: [
+    { num: 1, answer: 'CHAI', row: 0, col: 0 },
+    { num: 5, answer: 'SUNSCREEN', row: 2, col: 0 },
+    { num: 7, answer: 'ICEDCOFFEE', row: 4, col: 0 },
+    { num: 9, answer: 'OMANCHIPS', row: 6, col: 1 },
+    { num: 11, answer: 'GVM', row: 8, col: 3 },
+  ],
+  down: [
+    { num: 2, answer: 'OMSHANTOM', row: 0, col: 2 },
+    { num: 3, answer: 'VEEKSHITH', row: 0, col: 6 },
+    { num: 4, answer: 'BREADPAKODA', row: 1, col: 4 },
+    { num: 6, answer: 'PENNMASALA', row: 2, col: 8 },
+    { num: 8, answer: 'MINTCHIP', row: 5, col: 0 },
+    { num: 10, answer: 'PYAASA', row: 6, col: 5 },
+  ],
+};
+let crossCells = {};
+
+function initCrossword() {
+  crossCells = {};
+  [...CROSS_CLUES.across, ...CROSS_CLUES.down].forEach(clue => {
+    const isAcross = CROSS_CLUES.across.includes(clue);
+    for (let i = 0; i < clue.answer.length; i++) {
+      const r = isAcross ? clue.row : clue.row + i;
+      const c = isAcross ? clue.col + i : clue.col;
+      const key = `${r}-${c}`;
+      if (!crossCells[key]) crossCells[key] = { letter: clue.answer[i], num: null };
+      if (i === 0 && !crossCells[key].num) crossCells[key].num = clue.num;
+    }
+  });
+  renderCrossword();
+}
+
+function renderCrossword() {
+  const grid = document.getElementById('cross-grid');
+  grid.innerHTML = '';
+  grid.style.gridTemplateColumns = 'repeat(12, 26px)';
+  
+  for (let r = 0; r < 12; r++) {
+    for (let c = 0; c < 12; c++) {
+      const key = `${r}-${c}`;
+      const cell = document.createElement('div');
+      cell.className = 'cross-cell';
+      
+      if (crossCells[key]) {
+        if (crossCells[key].num) {
+          const num = document.createElement('span');
+          num.className = 'num';
+          num.textContent = crossCells[key].num;
+          cell.appendChild(num);
+        }
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.maxLength = 1;
+        input.dataset.key = key;
+        input.oninput = (e) => {
+          e.target.value = e.target.value.toUpperCase();
+          if (e.target.value === crossCells[key].letter) {
+            cell.classList.add('correct');
+          }
+        };
+        cell.appendChild(input);
+      } else {
+        cell.classList.add('black');
+      }
+      grid.appendChild(cell);
+    }
+  }
+}
+
+// Initialize on load
+initWordle();
+</script>
+
 </body>
 </html>
