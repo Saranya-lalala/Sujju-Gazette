@@ -3,181 +3,843 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Sujju Gazette</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <title>Happy Birthday Srujana!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Playfair Display', Georgia, serif; background: linear-gradient(to bottom, #fef3e2, #fde8d0); min-height: 100vh; }
+    body { font-family: 'Playfair Display', Georgia, serif; overflow-x: hidden; cursor: default; }
     .font-sans { font-family: 'IBM Plex Sans', Arial, sans-serif; }
-    .screen { display: none; min-height: 100vh; padding: 20px; }
-    .screen.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .font-handwritten { font-family: 'Caveat', cursive; }
+    .screen { display: none; min-height: 100vh; position: relative; }
+    .screen.active { display: block; }
     
-    /* Animations */
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    /* ===== LANDING PAGE ===== */
+    #landing {
+      background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 60%, #FFF8E7 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Sun */
+    .sun {
+      position: absolute;
+      top: 40px;
+      right: 80px;
+      width: 100px;
+      height: 100px;
+      background: #FFD93D;
+      border-radius: 50%;
+      box-shadow: 0 0 60px #FFD93D, 0 0 100px #FFA500;
+      animation: sunPulse 4s ease-in-out infinite;
+    }
+    .sun::before {
+      content: '';
+      position: absolute;
+      top: -20px; left: -20px; right: -20px; bottom: -20px;
+      background: radial-gradient(circle, rgba(255,217,61,0.3) 0%, transparent 70%);
+      animation: sunRays 3s ease-in-out infinite;
+    }
+    @keyframes sunPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    @keyframes sunRays { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(10deg); } }
+    
+    /* Clouds */
+    .cloud {
+      position: absolute;
+      background: white;
+      border-radius: 50px;
+      opacity: 0.9;
+      animation: cloudFloat 20s linear infinite;
+    }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+    }
+    .cloud-1 { width: 120px; height: 40px; top: 60px; left: -150px; animation-duration: 25s; }
+    .cloud-1::before { width: 50px; height: 50px; top: -25px; left: 20px; }
+    .cloud-1::after { width: 70px; height: 70px; top: -35px; left: 50px; }
+    .cloud-2 { width: 100px; height: 35px; top: 120px; left: -100px; animation-duration: 30s; animation-delay: 5s; }
+    .cloud-2::before { width: 45px; height: 45px; top: -22px; left: 15px; }
+    .cloud-2::after { width: 55px; height: 55px; top: -28px; left: 40px; }
+    .cloud-3 { width: 80px; height: 30px; top: 180px; left: -80px; animation-duration: 35s; animation-delay: 10s; }
+    .cloud-3::before { width: 35px; height: 35px; top: -18px; left: 10px; }
+    .cloud-3::after { width: 45px; height: 45px; top: -22px; left: 30px; }
+    @keyframes cloudFloat { from { transform: translateX(0); } to { transform: translateX(calc(100vw + 200px)); } }
+    
+    /* Jhumka */
+    .jhumka {
+      position: fixed;
+      top: 0;
+      left: 30px;
+      z-index: 100;
+      animation: jhumkaSwing 3s ease-in-out infinite;
+      transform-origin: top center;
+      font-size: 14px;
+      text-align: center;
+    }
+    .jhumka-string { width: 2px; height: 40px; background: linear-gradient(to bottom, #DAA520, #B8860B); margin: 0 auto; }
+    .jhumka-top { width: 20px; height: 20px; background: radial-gradient(circle at 30% 30%, #FFD700, #DAA520); border-radius: 50%; margin: 0 auto; border: 1px solid #B8860B; }
+    .jhumka-bell { width: 30px; height: 35px; background: linear-gradient(135deg, #FFD700 0%, #DAA520 50%, #B8860B 100%); border-radius: 0 0 50% 50%; margin: 0 auto; position: relative; border: 1px solid #B8860B; }
+    .jhumka-bell::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; background: #FFD700; border-radius: 50%; border: 1px solid #B8860B; }
+    .jhumka-dangles { display: flex; justify-content: center; gap: 4px; margin-top: 2px; }
+    .jhumka-dangle { width: 4px; height: 12px; background: linear-gradient(to bottom, #FFD700, #FFA500); border-radius: 0 0 50% 50%; animation: dangleSwing 1.5s ease-in-out infinite; }
+    .jhumka-dangle:nth-child(2) { animation-delay: 0.1s; height: 15px; }
+    .jhumka-dangle:nth-child(3) { animation-delay: 0.2s; }
+    @keyframes jhumkaSwing { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+    @keyframes dangleSwing { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+    
+    /* Cat following cursor */
+    .cat {
+      position: fixed;
+      width: 50px;
+      height: 50px;
+      pointer-events: none;
+      z-index: 1000;
+      transition: transform 0.1s;
+    }
+    .cat-body {
+      width: 40px;
+      height: 25px;
+      background: linear-gradient(135deg, #FF8C42 0%, #E67332 100%);
+      border-radius: 50%;
+      position: absolute;
+      bottom: 0;
+      left: 5px;
+    }
+    .cat-head {
+      width: 28px;
+      height: 24px;
+      background: linear-gradient(135deg, #FF8C42 0%, #E67332 100%);
+      border-radius: 50%;
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+    }
+    .cat-ear {
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 12px solid #FF8C42;
+      position: absolute;
+    }
+    .cat-ear.left { bottom: 35px; left: 2px; transform: rotate(-15deg); }
+    .cat-ear.right { bottom: 35px; left: 16px; transform: rotate(15deg); }
+    .cat-ear::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: -3px;
+      border-left: 3px solid transparent;
+      border-right: 3px solid transparent;
+      border-bottom: 6px solid #FFB6C1;
+    }
+    .cat-eye {
+      width: 6px;
+      height: 8px;
+      background: #2d2d2d;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 22px;
+    }
+    .cat-eye.left { left: 5px; }
+    .cat-eye.right { left: 17px; }
+    .cat-eye::after {
+      content: '';
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 1px;
+      left: 1px;
+    }
+    .cat-nose {
+      width: 5px;
+      height: 4px;
+      background: #FFB6C1;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 18px;
+      left: 11px;
+    }
+    .cat-tail {
+      width: 25px;
+      height: 6px;
+      background: linear-gradient(90deg, #E67332, #FF8C42);
+      border-radius: 3px;
+      position: absolute;
+      bottom: 8px;
+      right: -15px;
+      transform-origin: left center;
+      animation: tailWag 0.5s ease-in-out infinite;
+    }
+    @keyframes tailWag { 0%, 100% { transform: rotate(-20deg); } 50% { transform: rotate(20deg); } }
+    
+    /* Filter Coffee */
+    .coffee-station {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+    }
+    .coffee-filter {
+      width: 50px;
+      height: 70px;
+      position: relative;
+    }
+    .coffee-top {
+      width: 50px;
+      height: 35px;
+      background: linear-gradient(135deg, #C0C0C0 0%, #A0A0A0 100%);
+      border-radius: 5px 5px 0 0;
+      border: 2px solid #888;
+    }
+    .coffee-bottom {
+      width: 45px;
+      height: 35px;
+      background: linear-gradient(135deg, #C0C0C0 0%, #A0A0A0 100%);
+      border-radius: 0 0 5px 5px;
+      margin: 0 auto;
+      border: 2px solid #888;
+      border-top: none;
+      position: relative;
+    }
+    .coffee-drip {
+      position: absolute;
+      width: 4px;
+      height: 0;
+      background: #4a2c2a;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 100%;
+      animation: drip 2s ease-in infinite;
+      border-radius: 0 0 2px 2px;
+    }
+    @keyframes drip {
+      0% { height: 0; opacity: 1; }
+      50% { height: 20px; opacity: 1; }
+      100% { height: 20px; opacity: 0; top: 120%; }
+    }
+    .coffee-cup {
+      width: 35px;
+      height: 25px;
+      background: linear-gradient(135deg, #FFF8DC 0%, #F5DEB3 100%);
+      border: 2px solid #DEB887;
+      border-radius: 0 0 10px 10px;
+      margin: 15px auto 0;
+      position: relative;
+    }
+    .coffee-cup::after {
+      content: '';
+      position: absolute;
+      right: -12px;
+      top: 5px;
+      width: 12px;
+      height: 15px;
+      border: 2px solid #DEB887;
+      border-left: none;
+      border-radius: 0 10px 10px 0;
+    }
+    .coffee-liquid {
+      width: 100%;
+      height: 0%;
+      background: linear-gradient(to bottom, #6F4E37, #4a2c2a);
+      position: absolute;
+      bottom: 0;
+      border-radius: 0 0 8px 8px;
+      animation: fillCup 8s ease-in-out infinite;
+    }
+    @keyframes fillCup { 0%, 10% { height: 0%; } 90%, 100% { height: 80%; } }
+    .steam {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 3px;
+    }
+    .steam-line {
+      width: 2px;
+      height: 15px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 2px;
+      animation: steam 1.5s ease-in-out infinite;
+    }
+    .steam-line:nth-child(2) { animation-delay: 0.2s; height: 12px; }
+    .steam-line:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes steam {
+      0%, 100% { transform: translateY(0) scaleY(1); opacity: 0.6; }
+      50% { transform: translateY(-10px) scaleY(1.5); opacity: 0; }
+    }
+    
+    /* Beer Bottle */
+    .beer-bottle {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      cursor: pointer;
+      z-index: 100;
+      transition: transform 0.2s;
+    }
+    .beer-bottle:hover { transform: scale(1.1); }
+    .bottle {
+      width: 25px;
+      height: 70px;
+      background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+      border-radius: 5px 5px 8px 8px;
+      position: relative;
+    }
+    .bottle-neck {
+      width: 12px;
+      height: 20px;
+      background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+      margin: 0 auto;
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px 2px 0 0;
+    }
+    .bottle-cap {
+      width: 14px;
+      height: 6px;
+      background: linear-gradient(135deg, #FFD700 0%, #DAA520 100%);
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px 2px 0 0;
+    }
+    .bottle-cap.popped { animation: capPop 0.5s ease-out forwards; }
+    @keyframes capPop {
+      0% { transform: translateX(-50%) translateY(0) rotate(0); }
+      100% { transform: translateX(-50%) translateY(-50px) rotate(180deg); opacity: 0; }
+    }
+    .bottle-label {
+      width: 20px;
+      height: 25px;
+      background: #F5F5DC;
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+    .fizz {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: none;
+    }
+    .fizz.active { display: block; }
+    .bubble {
+      width: 6px;
+      height: 6px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 50%;
+      position: absolute;
+      animation: bubbleUp 1s ease-out forwards;
+    }
+    @keyframes bubbleUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-60px); opacity: 0; }
+    }
+    
+    /* Fairy Lights with Photos */
+    .fairy-lights {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      height: 200px;
+      pointer-events: none;
+    }
+    .string {
+      position: absolute;
+      top: 30px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: transparent;
+      border-bottom: 2px dashed #666;
+    }
+    .light-photo {
+      position: absolute;
+      top: 35px;
+      pointer-events: auto;
+      animation: photoSway 4s ease-in-out infinite;
+      transform-origin: top center;
+    }
+    .light-photo:nth-child(2) { left: 5%; animation-delay: 0s; }
+    .light-photo:nth-child(3) { left: 22%; animation-delay: 0.5s; }
+    .light-photo:nth-child(4) { left: 39%; animation-delay: 1s; }
+    .light-photo:nth-child(5) { left: 56%; animation-delay: 1.5s; }
+    .light-photo:nth-child(6) { left: 73%; animation-delay: 2s; }
+    .light-photo:nth-child(7) { left: 88%; animation-delay: 2.5s; }
+    @keyframes photoSway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+    .light-bulb {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin: 0 auto 5px;
+      animation: glow 1s ease-in-out infinite alternate;
+    }
+    .light-bulb.yellow { background: #FFD700; box-shadow: 0 0 10px #FFD700; }
+    .light-bulb.pink { background: #FF69B4; box-shadow: 0 0 10px #FF69B4; animation-delay: 0.2s; }
+    .light-bulb.blue { background: #00CED1; box-shadow: 0 0 10px #00CED1; animation-delay: 0.4s; }
+    .light-bulb.green { background: #32CD32; box-shadow: 0 0 10px #32CD32; animation-delay: 0.6s; }
+    @keyframes glow { 0% { opacity: 0.6; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.1); } }
+    .mini-photo {
+      width: 70px;
+      height: 85px;
+      background: white;
+      padding: 5px 5px 15px 5px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+      transform: rotate(var(--rotation, 0deg));
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .mini-photo:hover {
+      transform: rotate(0deg) scale(1.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+    .mini-photo img {
+      width: 100%;
+      height: 65px;
+      object-fit: cover;
+      filter: grayscale(30%);
+    }
+    .mini-photo:hover img { filter: grayscale(0%); }
+    
+    /* Main Content */
+    .landing-content {
+      padding-top: 240px;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .typewriter {
+      font-family: 'Caveat', cursive;
+      font-size: 52px;
+      font-weight: 700;
+      color: #333;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #333;
+      animation: typing 2s steps(22) forwards, blink 0.8s step-end infinite;
+      width: 0;
+      margin: 0 auto;
+    }
+    @keyframes typing { from { width: 0; } to { width: 100%; } }
+    @keyframes blink { 50% { border-color: transparent; } }
+    .intro-text {
+      font-size: 20px;
+      line-height: 1.8;
+      color: #444;
+      margin-top: 30px;
+      opacity: 0;
+      animation: fadeIn 1s ease-out forwards;
+      animation-delay: 2.5s;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 40px;
+      padding: 18px 45px;
+      font-size: 20px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: linear-gradient(135deg, #FF6B6B 0%, #ee5a5a 100%);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(255,107,107,0.4);
+      transition: all 0.3s;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+      animation-delay: 3.5s;
+    }
+    .btn:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 30px rgba(255,107,107,0.5);
+    }
+    
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
-    @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-    @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-    @keyframes wiggle { 0%, 100% { transform: rotate(-1deg); } 50% { transform: rotate(1deg); } }
-    @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-    @keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(400px) rotate(720deg); opacity: 0; } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     
-    .animate-fadeInUp { animation: fadeInUp 0.6s ease-out forwards; }
-    .animate-fadeIn { animation: fadeIn 0.8s ease-out forwards; }
-    .animate-float { animation: float 3s ease-in-out infinite; }
-    .animate-pulse { animation: pulse 2s ease-in-out infinite; }
-    .animate-popIn { animation: popIn 0.3s ease-out forwards; }
-    .animate-heartBeat { animation: heartBeat 1.5s ease-in-out infinite; }
-    
-    .btn { background: linear-gradient(90deg, #1a1a1a 0%, #333 50%, #1a1a1a 100%); background-size: 200% 100%; animation: shimmer 3s infinite; color: #fef3e2; padding: 12px 28px; font-size: 16px; border: none; cursor: pointer; font-family: 'IBM Plex Sans', sans-serif; transition: transform 0.2s; }
-    .btn:hover { transform: scale(1.05); }
-    
-    .photo-frame { border: 2px solid #000; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
-    .photo-frame:hover { transform: scale(1.02) rotate(1deg); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
-    .photo-frame img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); }
-    
-    .strikethrough { position: relative; }
-    .strikethrough::after { content: ''; position: absolute; left: 0; top: 50%; width: 100%; height: 2px; background: #000; }
-    
-    .floating-el { position: absolute; animation: float 3s ease-in-out infinite; opacity: 0.5; }
+    /* ===== GAME SCREENS ===== */
+    .game-screen {
+      background: linear-gradient(180deg, #FFF8E7 0%, #FFF5E0 100%);
+      min-height: 100vh;
+      padding: 30px 20px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+    .game-screen.active { display: flex; }
+    .game-screen h2 {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+    .game-screen .subtitle {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 25px;
+      font-family: 'IBM Plex Sans', sans-serif;
+    }
     
     /* Wordle */
-    .wordle-grid { display: grid; grid-template-rows: repeat(6, 1fr); gap: 5px; margin-bottom: 15px; }
-    .wordle-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; }
-    .wordle-cell { width: 50px; height: 50px; border: 2px solid #ccc; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: bold; text-transform: uppercase; background: #fff; transition: all 0.3s; }
-    .wordle-cell.correct { background: #22c55e; color: #fff; border-color: #22c55e; }
-    .wordle-cell.present { background: #eab308; color: #fff; border-color: #eab308; }
-    .wordle-cell.absent { background: #6b7280; color: #fff; border-color: #6b7280; }
-    .wordle-cell.filled { border-color: #666; animation: popIn 0.1s ease-out; }
-    .keyboard { display: flex; flex-direction: column; gap: 5px; }
-    .keyboard-row { display: flex; justify-content: center; gap: 4px; }
-    .key { padding: 10px 12px; background: #e5e5e5; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 14px; transition: all 0.1s; }
-    .key:hover { background: #d0d0d0; transform: scale(1.1); }
-    .key.wide { padding: 10px 15px; font-size: 11px; }
+    .wordle-grid { display: grid; grid-template-rows: repeat(6, 1fr); gap: 8px; margin-bottom: 20px; }
+    .wordle-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .wordle-cell {
+      width: 62px; height: 62px;
+      border: 3px solid #d3d6da;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; font-weight: bold; text-transform: uppercase;
+      background: #fff;
+      transition: all 0.2s;
+    }
+    .wordle-cell.filled { border-color: #878a8c; animation: popIn 0.1s ease-out; }
+    .wordle-cell.correct { background: #6aaa64; color: #fff; border-color: #6aaa64; }
+    .wordle-cell.present { background: #c9b458; color: #fff; border-color: #c9b458; }
+    .wordle-cell.absent { background: #787c7e; color: #fff; border-color: #787c7e; }
+    @keyframes popIn { 0% { transform: scale(0.8); } 100% { transform: scale(1); } }
+    
+    .keyboard { display: flex; flex-direction: column; gap: 8px; }
+    .keyboard-row { display: flex; justify-content: center; gap: 6px; }
+    .key {
+      padding: 15px 18px;
+      background: #d3d6da;
+      border: none; border-radius: 6px;
+      font-weight: bold; font-size: 16px;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    .key:hover { background: #c0c3c6; transform: scale(1.05); }
+    .key.wide { padding: 15px 20px; font-size: 13px; }
     
     /* Connections */
-    .connections-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; max-width: 400px; margin-bottom: 15px; }
-    .conn-tile { padding: 12px 8px; background: #fff; border: 2px solid #ccc; font-size: 11px; font-weight: bold; text-align: center; cursor: pointer; transition: all 0.2s; min-height: 50px; display: flex; align-items: center; justify-content: center; }
-    .conn-tile:hover { border-color: #666; transform: scale(1.03); }
-    .conn-tile.selected { background: #374151; color: #fff; border-color: #374151; }
-    .solved-group { padding: 12px; border-radius: 6px; text-align: center; margin-bottom: 8px; animation: popIn 0.3s ease-out; }
-    .solved-group.yellow { background: #facc15; }
-    .solved-group.blue { background: #60a5fa; }
-    .solved-group.green { background: #22c55e; }
-    .solved-group.purple { background: #a855f7; }
+    .connections-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-width: 500px;
+      margin-bottom: 20px;
+    }
+    .conn-tile {
+      padding: 18px 12px;
+      background: #efefe6;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .conn-tile:hover { background: #ddddd0; transform: scale(1.03); }
+    .conn-tile.selected { background: #5a5a5a; color: #fff; }
+    .solved-group {
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 10px;
+      animation: popIn 0.3s ease-out;
+      max-width: 500px;
+      width: 100%;
+    }
+    .solved-group.yellow { background: #f9df6d; }
+    .solved-group.blue { background: #a0c4ff; }
+    .solved-group.green { background: #a0d995; }
+    .solved-group.purple { background: #b0a4e3; }
     
     /* Crossword */
-    .crossword-container { display: flex; flex-direction: column; align-items: center; gap: 20px; }
-    @media (min-width: 800px) { .crossword-container { flex-direction: row; align-items: flex-start; } }
-    .crossword-grid { display: grid; gap: 1px; background: #000; padding: 1px; }
-    .cross-cell { width: 26px; height: 26px; background: #fff; position: relative; }
+    .crossword-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+    }
+    @media (min-width: 900px) {
+      .crossword-container { flex-direction: row; align-items: flex-start; }
+    }
+    .crossword-grid {
+      display: grid;
+      gap: 2px;
+      background: #000;
+      padding: 2px;
+    }
+    .cross-cell {
+      width: 32px; height: 32px;
+      background: #fff;
+      position: relative;
+    }
     .cross-cell.black { background: #1a1a1a; }
-    .cross-cell input { width: 100%; height: 100%; border: none; text-align: center; font-weight: bold; font-size: 14px; text-transform: uppercase; background: transparent; }
-    .cross-cell input:focus { outline: 2px solid #3b82f6; }
-    .cross-cell .num { position: absolute; top: 1px; left: 2px; font-size: 9px; line-height: 1; }
-    .cross-cell.correct input { color: #22c55e; }
-    .clues { font-size: 13px; max-width: 280px; }
-    .clues h4 { font-size: 16px; margin-bottom: 8px; }
-    .clues p { margin-bottom: 6px; line-height: 1.4; }
+    .cross-cell input {
+      width: 100%; height: 100%;
+      border: none;
+      text-align: center;
+      font-weight: bold;
+      font-size: 18px;
+      text-transform: uppercase;
+      background: transparent;
+    }
+    .cross-cell input:focus { outline: 2px solid #6aaa64; background: #fffde7; }
+    .cross-cell .num { position: absolute; top: 2px; left: 3px; font-size: 10px; line-height: 1; }
+    .cross-cell.correct input { color: #6aaa64; }
+    .clues { font-size: 15px; max-width: 320px; line-height: 1.6; }
+    .clues h4 { font-size: 20px; margin-bottom: 12px; }
+    .clues p { margin-bottom: 8px; }
+    
+    /* Photo Screen */
+    .photo-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #FFF8E7 0%, #FFF5E0 100%);
+    }
+    .photo-frame {
+      border: 4px solid #333;
+      padding: 10px;
+      background: #fff;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      transition: transform 0.3s;
+    }
+    .photo-frame:hover { transform: rotate(2deg) scale(1.02); }
+    .photo-frame img { width: 300px; height: 380px; object-fit: cover; filter: grayscale(100%); }
     
     /* Letter */
-    .letter-container { max-width: 600px; border-top: 2px solid #000; border-bottom: 2px solid #000; padding: 30px 0; margin-top: 20px; }
-    .letter-container p { margin-bottom: 16px; line-height: 1.7; font-size: 15px; }
+    .letter-screen {
+      background: linear-gradient(180deg, #FFF8E7 0%, #FFF5E0 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .letter-container {
+      max-width: 650px;
+      margin: 0 auto;
+    }
+    .letter-photos {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .letter-photos .photo-frame img { width: 160px; height: 200px; }
+    .letter-content {
+      border-top: 3px solid #333;
+      border-bottom: 3px solid #333;
+      padding: 40px 0;
+    }
+    .letter-content h2 { text-align: center; font-size: 32px; margin-bottom: 30px; }
+    .letter-content p { font-size: 17px; line-height: 1.9; margin-bottom: 20px; }
+    .letter-end {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 28px;
+      animation: heartBeat 1.5s ease-in-out infinite;
+    }
+    @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    
+    /* Button styles for game screens */
+    .game-btn {
+      padding: 14px 35px;
+      font-size: 16px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin: 5px;
+    }
+    .game-btn:hover { background: #555; transform: scale(1.03); }
+    .game-btn.outline { background: transparent; border: 2px solid #333; color: #333; }
+    .game-btn.outline:hover { background: #f5f5f5; }
     
     /* Confetti */
-    .confetti { position: fixed; width: 10px; height: 10px; top: -10px; animation: confettiFall 3s ease-out forwards; pointer-events: none; z-index: 1000; }
+    .confetti {
+      position: fixed;
+      width: 10px; height: 10px;
+      top: -10px;
+      animation: confettiFall 3s ease-out forwards;
+      pointer-events: none;
+      z-index: 1000;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    
+    /* Result display */
+    .result { text-align: center; margin-top: 25px; }
+    .result p { font-size: 28px; margin-bottom: 15px; }
+    
+    /* Hint */
+    .hint { font-style: italic; font-size: 16px; margin-bottom: 15px; color: #666; }
   </style>
 </head>
 <body>
 
+<!-- Cat following cursor -->
+<div class="cat" id="cat">
+  <div class="cat-ear left"></div>
+  <div class="cat-ear right"></div>
+  <div class="cat-head"></div>
+  <div class="cat-eye left"></div>
+  <div class="cat-eye right"></div>
+  <div class="cat-nose"></div>
+  <div class="cat-body"></div>
+  <div class="cat-tail"></div>
+</div>
+
+<!-- Jhumka -->
+<div class="jhumka">
+  <div class="jhumka-string"></div>
+  <div class="jhumka-top"></div>
+  <div class="jhumka-bell"></div>
+  <div class="jhumka-dangles">
+    <div class="jhumka-dangle"></div>
+    <div class="jhumka-dangle"></div>
+    <div class="jhumka-dangle"></div>
+  </div>
+</div>
+
+<!-- Coffee Station -->
+<div class="coffee-station">
+  <div class="coffee-filter">
+    <div class="coffee-top"></div>
+    <div class="coffee-bottom">
+      <div class="coffee-drip"></div>
+    </div>
+  </div>
+  <div class="coffee-cup">
+    <div class="coffee-liquid"></div>
+    <div class="steam">
+      <div class="steam-line"></div>
+      <div class="steam-line"></div>
+      <div class="steam-line"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Beer Bottle -->
+<div class="beer-bottle" id="beer" onclick="popBeer()">
+  <div class="bottle">
+    <div class="bottle-cap" id="bottle-cap"></div>
+    <div class="bottle-neck"></div>
+    <div class="bottle-label"></div>
+  </div>
+  <div class="fizz" id="fizz"></div>
+</div>
+
 <!-- LANDING -->
 <div id="landing" class="screen active">
-  <div class="floating-el" style="top: 10%; left: 8%; font-size: 24px;">✧</div>
-  <div class="floating-el" style="top: 15%; right: 12%; font-size: 18px; animation-delay: 0.5s;">♡</div>
-  <div class="floating-el" style="bottom: 15%; left: 10%; font-size: 20px; animation-delay: 1s;">✦</div>
-  <div class="floating-el" style="bottom: 10%; right: 8%; font-size: 16px; animation-delay: 1.5s;">✧</div>
+  <!-- Sun -->
+  <div class="sun"></div>
   
-  <div style="text-align: center; max-width: 400px;">
-    <p class="font-sans animate-fadeIn" style="font-size: 11px; letter-spacing: 3px; margin-bottom: 12px;">✦ SPECIAL BIRTHDAY EDITION ✦</p>
-    <h1 class="strikethrough animate-fadeIn" style="font-size: 28px; margin-bottom: 4px; animation-delay: 0.2s;">The New York Times</h1>
-    <h1 class="animate-fadeInUp" style="font-size: 36px; margin-bottom: 12px; animation-delay: 0.4s;">The Sujju Gazette</h1>
-    <div class="animate-fadeIn" style="height: 1px; background: #000; margin-bottom: 12px; animation-delay: 0.6s;"></div>
-    <p class="font-sans animate-fadeIn" style="font-size: 12px; margin-bottom: 20px; animation-delay: 0.8s;">FEBRUARY 12, 2025 — CELEBRATING SRUJANA RACHURI</p>
-    
-    <div class="photo-frame animate-fadeInUp" style="width: 200px; height: 260px; margin: 0 auto 20px; animation-delay: 1s;">
-      <img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/landing.jpg" alt="Srujana">
+  <!-- Clouds -->
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  
+  <!-- Fairy Lights with Photos -->
+  <div class="fairy-lights">
+    <div class="string"></div>
+    <div class="light-photo">
+      <div class="light-bulb yellow"></div>
+      <div class="mini-photo" style="--rotation: -5deg;"><img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/landing.jpg" alt=""></div>
+    </div>
+    <div class="light-photo">
+      <div class="light-bulb pink"></div>
+      <div class="mini-photo" style="--rotation: 3deg;"><img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/wordle.jpg" alt=""></div>
+    </div>
+    <div class="light-photo">
+      <div class="light-bulb blue"></div>
+      <div class="mini-photo" style="--rotation: -2deg;"><img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/connections.jpg" alt=""></div>
+    </div>
+    <div class="light-photo">
+      <div class="light-bulb green"></div>
+      <div class="mini-photo" style="--rotation: 4deg;"><img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/ITC.jpg" alt=""></div>
+    </div>
+    <div class="light-photo">
+      <div class="light-bulb yellow"></div>
+      <div class="mini-photo" style="--rotation: -3deg;"><img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/throwback.jpg" alt=""></div>
+    </div>
+    <div class="light-photo">
+      <div class="light-bulb pink"></div>
+      <div class="mini-photo" style="--rotation: 2deg;"><img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/stairs.jpg" alt=""></div>
+    </div>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="landing-content">
+    <div style="display: inline-block;">
+      <div class="typewriter">Happy Birthday Srujanaaa!</div>
     </div>
     
-    <p class="animate-fadeIn" style="font-style: italic; margin-bottom: 20px; animation-delay: 1.2s;">"Sujjulala, Sujju, Rachuri, and the love of my life"</p>
+    <p class="intro-text">
+      Okay so, I couldn't just send you a "happy birthday" text like a normal person. No no no. Instead, I made you an entire INTERACTIVE EXPERIENCE because apparently I have no chill and too much love for you.<br><br>
+      What awaits you: a Wordle (that you'll probably solve in 2 tries because you're annoyingly smart), a Connections game (themed entirely around US because obviously), a crossword (with clues only YOU would understand), and a letter that made me cry while writing so you better cry while reading it.<br><br>
+      Also there's a cat following your cursor. You're welcome.<br><br>
+      🐱☕✨
+    </p>
     
-    <button class="btn animate-fadeInUp animate-pulse" style="animation-delay: 1.4s;" onclick="goTo('wordle')">BEGIN THE GAMES ✦</button>
+    <button class="btn" onclick="goTo('wordle')">Let's Gooo! →</button>
   </div>
 </div>
 
 <!-- WORDLE -->
-<div id="wordle" class="screen">
-  <h2 class="animate-fadeInUp" style="font-size: 32px; margin-bottom: 8px;">Wordle</h2>
-  <p class="font-sans animate-fadeIn" style="font-size: 14px; color: #666; margin-bottom: 8px;">Guess the 5-letter word</p>
-  <p id="wordle-hint" class="animate-fadeIn" style="font-style: italic; font-size: 14px; margin-bottom: 15px; display: none;">Hint: International Udupi</p>
-  
+<div id="wordle" class="screen game-screen">
+  <h2>Wordle</h2>
+  <p class="subtitle">Guess the 5-letter word</p>
+  <p id="wordle-hint" class="hint" style="display: none;">Hint: International Udupi</p>
   <div id="wordle-grid" class="wordle-grid"></div>
-  
   <div id="wordle-keyboard" class="keyboard"></div>
-  
-  <div id="wordle-result" style="text-align: center; margin-top: 20px; display: none;">
-    <p style="font-size: 24px; margin-bottom: 8px;"></p>
-    <p style="font-size: 14px; font-style: italic; color: #666; margin-bottom: 15px;">International Udupi, indeed. ✨</p>
-    <button class="btn" onclick="goTo('photo1')">Continue →</button>
+  <div id="wordle-result" class="result" style="display: none;">
+    <p></p>
+    <p class="hint">International Udupi, indeed. ✨</p>
+    <button class="game-btn" onclick="goTo('connections')">Continue →</button>
   </div>
-</div>
-
-<!-- PHOTO 1 -->
-<div id="photo1" class="screen">
-  <div class="photo-frame animate-fadeInUp" style="width: 280px; height: 360px;">
-    <img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/wordle.jpg" alt="">
-  </div>
-  <button class="btn" style="margin-top: 25px;" onclick="goTo('connections')">Continue →</button>
 </div>
 
 <!-- CONNECTIONS -->
-<div id="connections" class="screen">
-  <h2 class="animate-fadeInUp" style="font-size: 32px; margin-bottom: 8px;">Connections</h2>
-  <p class="font-sans animate-fadeIn" style="font-size: 14px; color: #666; margin-bottom: 8px;">Find four groups of four</p>
-  <div id="conn-mistakes" style="display: flex; gap: 5px; margin-bottom: 15px;"></div>
-  
+<div id="connections" class="screen game-screen">
+  <h2>Connections</h2>
+  <p class="subtitle">Find four groups of four</p>
+  <div id="conn-mistakes" style="display: flex; gap: 6px; margin-bottom: 20px;"></div>
   <div id="conn-solved"></div>
   <div id="conn-grid" class="connections-grid"></div>
-  
-  <div id="conn-buttons" style="display: flex; gap: 10px; margin-top: 10px;">
-    <button class="btn" style="background: #fff; color: #000; border: 1px solid #000;" onclick="connShuffle()">Shuffle</button>
-    <button class="btn" style="background: #fff; color: #000; border: 1px solid #000;" onclick="connClear()">Clear</button>
-    <button class="btn" onclick="connSubmit()">Submit</button>
+  <div id="conn-buttons" style="margin-top: 15px;">
+    <button class="game-btn outline" onclick="connShuffle()">Shuffle</button>
+    <button class="game-btn outline" onclick="connClear()">Clear</button>
+    <button class="game-btn" onclick="connSubmit()">Submit</button>
   </div>
-  
-  <div id="conn-result" style="text-align: center; margin-top: 20px; display: none;">
-    <p style="font-size: 24px; margin-bottom: 15px;"></p>
-    <button class="btn" onclick="goTo('photo2')">Continue →</button>
+  <div id="conn-result" class="result" style="display: none;">
+    <p></p>
+    <button class="game-btn" onclick="goTo('crossword')">Continue →</button>
   </div>
-</div>
-
-<!-- PHOTO 2 -->
-<div id="photo2" class="screen">
-  <div class="photo-frame animate-fadeInUp" style="width: 280px; height: 360px;">
-    <img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/connections.jpg" alt="">
-  </div>
-  <button class="btn" style="margin-top: 25px;" onclick="goTo('crossword')">Continue →</button>
 </div>
 
 <!-- CROSSWORD -->
-<div id="crossword" class="screen" style="justify-content: flex-start; padding-top: 30px;">
-  <h2 class="animate-fadeInUp" style="font-size: 32px; margin-bottom: 8px;">Crossword</h2>
-  <p class="font-sans animate-fadeIn" style="font-size: 14px; color: #666; margin-bottom: 20px;">All about Sujju ✨</p>
-  
+<div id="crossword" class="screen game-screen" style="justify-content: flex-start; padding-top: 40px;">
+  <h2>Crossword</h2>
+  <p class="subtitle">All about Sujju ✨</p>
   <div class="crossword-container">
     <div id="cross-grid" class="crossword-grid"></div>
     <div class="clues">
-      <div style="margin-bottom: 20px;">
+      <div style="margin-bottom: 25px;">
         <h4>Across</h4>
         <p><strong>1.</strong> Her eternal nemesis in beverage form</p>
         <p><strong>5.</strong> SPF? Never heard of her</p>
@@ -196,64 +858,94 @@
       </div>
     </div>
   </div>
-  
-  <button class="btn" style="margin-top: 25px;" onclick="goTo('photo3')">Continue to Letter →</button>
-</div>
-
-<!-- PHOTO 3 -->
-<div id="photo3" class="screen">
-  <div class="photo-frame animate-fadeInUp" style="width: 280px; height: 360px;">
-    <img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/ITC.jpg" alt="">
-  </div>
-  <button class="btn" style="margin-top: 25px;" onclick="goTo('letter')">Continue →</button>
+  <button class="game-btn" style="margin-top: 30px;" onclick="goTo('letter')">Continue to Letter →</button>
 </div>
 
 <!-- LETTER -->
-<div id="letter" class="screen" style="justify-content: flex-start; padding: 40px 20px;">
-  <div style="display: flex; gap: 15px; margin-bottom: 10px;">
-    <div class="photo-frame" style="width: 150px; height: 190px;">
-      <img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/throwback.jpg" alt="2016">
-    </div>
-    <div class="photo-frame" style="width: 150px; height: 190px;">
-      <img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/stairs.jpg" alt="Now">
-    </div>
-  </div>
-  
+<div id="letter" class="screen letter-screen">
   <div class="letter-container">
-    <h2 style="text-align: center; font-size: 26px; margin-bottom: 25px;">A Letter for You</h2>
+    <div class="letter-photos">
+      <div class="photo-frame"><img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/throwback.jpg" alt="2016"></div>
+      <div class="photo-frame"><img src="https://raw.githubusercontent.com/Saranya-lalala/Sujju-Gazette/main/stairs.jpg" alt="Now"></div>
+    </div>
     
-    <p><strong style="font-size: 18px;">Srujana,</strong></p>
+    <div class="letter-content">
+      <h2>A Letter for You</h2>
+      
+      <p><strong style="font-size: 20px;">Srujana,</strong></p>
+      
+      <p>Writing a letter for you is the most humiliating process. I cannot write like you do, I cannot express the way you can, I cannot process my thoughts into words that beautifully come together the way you manage to do so effortlessly. What can I do then except be intentional. So that's what this is. An intentional note that hopefully tells you how incomplete my life has been without you in it.</p>
+      
+      <p>Papa, any big, important, life-changing moments that have ever happened, has always had you around ready for me like one warm blanket to hide inside when things feel too scary. And when I was thinking of suitable examples, the first memory that pops up is when on a rainy, shitty day in Bangalore, I came home to you right after therapy. I had spoken to Bandita about how someone in office told me, "You always look like you're on the verge of tears". This was just after someone asked me what my name was, and I barely managed to whisper "Saranya". I felt so ashamed of not even being able to say my name with confidence. And then I came home to you, and you were just wrapping up some work. I plopped myself on the sofa, looking for songs to play. But I could barely contain myself, I just wanted to cry. And then, you finished work and came out of the room in tears. I don't even remember what had happened, but all I wanted was to cry with you. Srujana, I have no bigger relief than in being able to cry with you. And then of course, say "fine" a million times not fully convinced anything is ever fine.</p>
+      
+      <p>I keep wanting to be in two places at once. I can be in a new city, a new café, surrounded by new people, doing all the right things and still, all I want is to be with you, at home, drinking shitty chai and not needing anything else (other than a cigarette, maybe).</p>
+      
+      <p>I once read an astronaut write about how when she was on Earth, she longed for space, and when she was finally there, she only wanted to come back home. That kind of longing made sense to me immediately. Desire is so strange bro, it convinces us to chase distance, until we realise what we were really tethered to.</p>
+      
+      <p>Home, for me, was never a place. It has always been you papa. It's the ease of being with you, the quiet understanding, the way the world feels less demanding when we're together.</p>
+      
+      <p>Now, in this cold, grey city of London, I walk around feeling slightly (very) misplaced, carrying this constant heaviness of wanting to return not to a city or a room, but to us. And while you may think that this is a stretch, I will see you in a week with receipts from endless texts to others about how earnestly I feel about this.</p>
+      
+      <p>I came across this poem a while back, and when I sit to think of what I want to say to you, I thought this deserved a call back. It talks about carrying things long after we are told we should have outgrown them. A random girl who I thought was my best friend in school once told me "you breath so loudly, it's very irritating" and believe me when I say it, I have ever since been painfully aware of the way I breathe. Surviving doesn't always look brave, sometimes it just looks like getting through the day without hardening. I see that kind of survival in you. In the way you learned to keep going without losing your softness. In the way we still feel things deeply, even when it would be easier not to. And the best part is, you've always understood that about me - that I don't want to be made tougher, I just want to be made steady. With you, I don't have to pretend I've moved on from the parts of me that still annoy. I don't have to explain why certain days feel heavier, or why distance feels louder than it should. You've never asked me to be less sensitive, less emotional, less lonely. And that, more than anything, is why being away from you feels like carrying my heart outside my body.</p>
+      
+      <p>Which is why, I firmly believe that we are in need or urgent fixing and I am just glad Harshita is getting married so I have an early excuse to come home. More than anything, there's a lightness in knowing that in a week, distance will stop being theoretical and start being reachable. That I'll get to sit across from you, steal your time, and let my nervous system remember what safety feels like. I can't wait to sing again with you; it will do a lot more fixing than anything else ever really can. So in ten days exactly, be ready to belt Aji Rooth Kar again, badly and unapologetically. Until then, happy birthday, Rachuri. Peace out.</p>
+      
+      <p style="margin-top: 35px;">Lots of love,<br><strong>Shanpa</strong></p>
+    </div>
     
-    <p>Writing a letter for you is the most humiliating process. I cannot write like you do, I cannot express the way you can, I cannot process my thoughts into words that beautifully come together the way you manage to do so effortlessly. What can I do then except be intentional. So that's what this is. An intentional note that hopefully tells you how incomplete my life has been without you in it.</p>
-    
-    <p>Papa, any big, important, life-changing moments that have ever happened, has always had you around ready for me like one warm blanket to hide inside when things feel too scary. And when I was thinking of suitable examples, the first memory that pops up is when on a rainy, shitty day in Bangalore, I came home to you right after therapy. I had spoken to Bandita about how someone in office told me, "You always look like you're on the verge of tears". This was just after someone asked me what my name was, and I barely managed to whisper "Saranya". I felt so ashamed of not even being able to say my name with confidence. And then I came home to you, and you were just wrapping up some work. I plopped myself on the sofa, looking for songs to play. But I could barely contain myself, I just wanted to cry. And then, you finished work and came out of the room in tears. I don't even remember what had happened, but all I wanted was to cry with you. Srujana, I have no bigger relief than in being able to cry with you. And then of course, say "fine" a million times not fully convinced anything is ever fine.</p>
-    
-    <p>I keep wanting to be in two places at once. I can be in a new city, a new café, surrounded by new people, doing all the right things and still, all I want is to be with you, at home, drinking shitty chai and not needing anything else (other than a cigarette, maybe).</p>
-    
-    <p>I once read an astronaut write about how when she was on Earth, she longed for space, and when she was finally there, she only wanted to come back home. That kind of longing made sense to me immediately. Desire is so strange bro, it convinces us to chase distance, until we realise what we were really tethered to.</p>
-    
-    <p>Home, for me, was never a place. It has always been you papa. It's the ease of being with you, the quiet understanding, the way the world feels less demanding when we're together.</p>
-    
-    <p>Now, in this cold, grey city of London, I walk around feeling slightly (very) misplaced, carrying this constant heaviness of wanting to return not to a city or a room, but to us. And while you may think that this is a stretch, I will see you in a week with receipts from endless texts to others about how earnestly I feel about this.</p>
-    
-    <p>I came across this poem a while back, and when I sit to think of what I want to say to you, I thought this deserved a call back. It talks about carrying things long after we are told we should have outgrown them. A random girl who I thought was my best friend in school once told me "you breath so loudly, it's very irritating" and believe me when I say it, I have ever since been painfully aware of the way I breathe. Surviving doesn't always look brave, sometimes it just looks like getting through the day without hardening. I see that kind of survival in you. In the way you learned to keep going without losing your softness. In the way we still feel things deeply, even when it would be easier not to. And the best part is, you've always understood that about me - that I don't want to be made tougher, I just want to be made steady. With you, I don't have to pretend I've moved on from the parts of me that still annoy. I don't have to explain why certain days feel heavier, or why distance feels louder than it should. You've never asked me to be less sensitive, less emotional, less lonely. And that, more than anything, is why being away from you feels like carrying my heart outside my body.</p>
-    
-    <p>Which is why, I firmly believe that we are in need or urgent fixing and I am just glad Harshita is getting married so I have an early excuse to come home. More than anything, there's a lightness in knowing that in a week, distance will stop being theoretical and start being reachable. That I'll get to sit across from you, steal your time, and let my nervous system remember what safety feels like. I can't wait to sing again with you; it will do a lot more fixing than anything else ever really can. So in ten days exactly, be ready to belt Aji Rooth Kar again, badly and unapologetically. Until then, happy birthday, Rachuri. Peace out.</p>
-    
-    <p style="margin-top: 30px;">Lots of love,<br><strong>Shanpa</strong></p>
+    <p class="letter-end">Happy Birthday, Sujju ♡</p>
+    <p style="text-align: center; font-size: 14px; color: #888; margin-top: 15px;">Made with love from London</p>
   </div>
-  
-  <p class="animate-heartBeat" style="font-size: 24px; margin-top: 30px; text-align: center;">Happy Birthday, Sujju ♡</p>
-  <p style="font-size: 13px; color: #888; margin-top: 10px;">Made with love from London</p>
 </div>
 
 <script>
+// Cat following cursor
+const cat = document.getElementById('cat');
+let catX = 0, catY = 0, mouseX = 0, mouseY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+});
+
+function animateCat() {
+  const dx = mouseX - catX;
+  const dy = mouseY - catY;
+  catX += dx * 0.08;
+  catY += dy * 0.08;
+  cat.style.left = (catX - 25) + 'px';
+  cat.style.top = (catY - 25) + 'px';
+  
+  // Flip cat based on direction
+  if (dx > 2) cat.style.transform = 'scaleX(1)';
+  else if (dx < -2) cat.style.transform = 'scaleX(-1)';
+  
+  requestAnimationFrame(animateCat);
+}
+animateCat();
+
+// Beer bottle
+let beerPopped = false;
+function popBeer() {
+  if (beerPopped) return;
+  beerPopped = true;
+  document.getElementById('bottle-cap').classList.add('popped');
+  const fizz = document.getElementById('fizz');
+  fizz.classList.add('active');
+  for (let i = 0; i < 15; i++) {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.style.left = (Math.random() * 20 - 10) + 'px';
+    bubble.style.animationDelay = (Math.random() * 0.5) + 's';
+    fizz.appendChild(bubble);
+  }
+}
+
 // Navigation
 function goTo(screenId) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(screenId).classList.add('active');
   window.scrollTo(0, 0);
-  
   if (screenId === 'wordle') initWordle();
   if (screenId === 'connections') initConnections();
   if (screenId === 'crossword') initCrossword();
@@ -261,8 +953,8 @@ function goTo(screenId) {
 
 // Confetti
 function spawnConfetti() {
-  const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#DDA0DD'];
-  for (let i = 0; i < 50; i++) {
+  const colors = ['#FFD700', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#DDA0DD', '#FF69B4'];
+  for (let i = 0; i < 60; i++) {
     const conf = document.createElement('div');
     conf.className = 'confetti';
     conf.style.left = Math.random() * 100 + '%';
@@ -276,16 +968,11 @@ function spawnConfetti() {
 
 // ===== WORDLE =====
 const WORDLE_ANSWER = 'PARIS';
-let wordleGuesses = [];
-let wordleCurrent = '';
-let wordleGameOver = false;
+let wordleGuesses = [], wordleCurrent = '', wordleGameOver = false;
 
 function initWordle() {
-  wordleGuesses = [];
-  wordleCurrent = '';
-  wordleGameOver = false;
-  renderWordleGrid();
-  renderWordleKeyboard();
+  wordleGuesses = []; wordleCurrent = ''; wordleGameOver = false;
+  renderWordleGrid(); renderWordleKeyboard();
   document.getElementById('wordle-result').style.display = 'none';
   document.getElementById('wordle-hint').style.display = 'none';
   document.getElementById('wordle-keyboard').style.display = 'flex';
@@ -300,8 +987,6 @@ function renderWordleGrid() {
     for (let c = 0; c < 5; c++) {
       const cell = document.createElement('div');
       cell.className = 'wordle-cell';
-      cell.id = `wc-${r}-${c}`;
-      
       if (r < wordleGuesses.length) {
         const letter = wordleGuesses[r][c];
         cell.textContent = letter;
@@ -327,22 +1012,19 @@ function renderWordleKeyboard() {
     rowDiv.className = 'keyboard-row';
     if (i === 2) {
       const enter = document.createElement('button');
-      enter.className = 'key wide';
-      enter.textContent = 'ENTER';
+      enter.className = 'key wide'; enter.textContent = 'ENTER';
       enter.onclick = () => wordleKey('ENTER');
       rowDiv.appendChild(enter);
     }
     row.split('').forEach(k => {
       const key = document.createElement('button');
-      key.className = 'key';
-      key.textContent = k;
+      key.className = 'key'; key.textContent = k;
       key.onclick = () => wordleKey(k);
       rowDiv.appendChild(key);
     });
     if (i === 2) {
       const del = document.createElement('button');
-      del.className = 'key wide';
-      del.textContent = 'DEL';
+      del.className = 'key wide'; del.textContent = 'DEL';
       del.onclick = () => wordleKey('DEL');
       rowDiv.appendChild(del);
     }
@@ -355,31 +1037,25 @@ function wordleKey(key) {
   if (key === 'ENTER' && wordleCurrent.length === 5) {
     wordleGuesses.push(wordleCurrent);
     if (wordleCurrent === WORDLE_ANSWER) {
-      wordleGameOver = true;
-      renderWordleGrid();
-      spawnConfetti();
+      wordleGameOver = true; renderWordleGrid(); spawnConfetti();
       document.getElementById('wordle-keyboard').style.display = 'none';
       const result = document.getElementById('wordle-result');
       result.style.display = 'block';
       result.querySelector('p').textContent = '🎉 Brilliant!';
     } else if (wordleGuesses.length >= 6) {
-      wordleGameOver = true;
-      renderWordleGrid();
+      wordleGameOver = true; renderWordleGrid();
       document.getElementById('wordle-keyboard').style.display = 'none';
       const result = document.getElementById('wordle-result');
       result.style.display = 'block';
       result.querySelector('p').textContent = 'The word was ' + WORDLE_ANSWER;
     } else {
-      wordleCurrent = '';
-      renderWordleGrid();
+      wordleCurrent = ''; renderWordleGrid();
       if (wordleGuesses.length >= 2) document.getElementById('wordle-hint').style.display = 'block';
     }
   } else if (key === 'DEL') {
-    wordleCurrent = wordleCurrent.slice(0, -1);
-    renderWordleGrid();
+    wordleCurrent = wordleCurrent.slice(0, -1); renderWordleGrid();
   } else if (wordleCurrent.length < 5 && /^[A-Z]$/.test(key)) {
-    wordleCurrent += key;
-    renderWordleGrid();
+    wordleCurrent += key; renderWordleGrid();
   }
 }
 
@@ -397,42 +1073,34 @@ const CONN_CATEGORIES = [
   { name: 'Places we made "our home"', words: ['HAPPY HOMES', 'DODDA BANASWADI', 'INDIRANAGAR-ISH', 'WHITEFIELD'], color: 'green' },
   { name: 'Personality-defining things she loves', words: ['CATS', 'AGATHA CHRISTIE', 'SRK', 'HARRY POTTER'], color: 'purple' },
 ];
-let connWords = [];
-let connSelected = [];
-let connSolved = [];
-let connMistakes = 0;
+let connWords = [], connSelected = [], connSolved = [], connMistakes = 0;
 
 function initConnections() {
   connWords = CONN_CATEGORIES.flatMap(c => c.words).sort(() => Math.random() - 0.5);
-  connSelected = [];
-  connSolved = [];
-  connMistakes = 0;
+  connSelected = []; connSolved = []; connMistakes = 0;
   renderConnections();
   document.getElementById('conn-result').style.display = 'none';
-  document.getElementById('conn-buttons').style.display = 'flex';
+  document.getElementById('conn-buttons').style.display = 'block';
 }
 
 function renderConnections() {
-  // Mistakes
   const mist = document.getElementById('conn-mistakes');
   mist.innerHTML = '';
   for (let i = 0; i < 4; i++) {
     const dot = document.createElement('div');
-    dot.style.cssText = `width: 12px; height: 12px; border-radius: 50%; background: ${i < connMistakes ? '#ef4444' : '#d1d5db'}; transition: background 0.3s;`;
+    dot.style.cssText = `width: 14px; height: 14px; border-radius: 50%; background: ${i < connMistakes ? '#ef4444' : '#d1d5db'}; transition: all 0.3s;`;
     mist.appendChild(dot);
   }
   
-  // Solved
   const solvedDiv = document.getElementById('conn-solved');
   solvedDiv.innerHTML = '';
   connSolved.forEach(cat => {
     const div = document.createElement('div');
     div.className = `solved-group ${cat.color}`;
-    div.innerHTML = `<strong style="font-size: 13px;">${cat.name}</strong><br><span style="font-size: 11px;">${cat.words.join(' • ')}</span>`;
+    div.innerHTML = `<strong>${cat.name}</strong><br><span style="font-size: 13px;">${cat.words.join(' • ')}</span>`;
     solvedDiv.appendChild(div);
   });
   
-  // Grid
   const grid = document.getElementById('conn-grid');
   grid.innerHTML = '';
   const remaining = connWords.filter(w => !connSolved.some(c => c.words.includes(w)));
@@ -446,19 +1114,15 @@ function renderConnections() {
   
   if (connSolved.length === 4) {
     document.getElementById('conn-buttons').style.display = 'none';
-    const result = document.getElementById('conn-result');
-    result.style.display = 'block';
-    result.querySelector('p').textContent = '🎉 Perfect!';
+    document.getElementById('conn-result').style.display = 'block';
+    document.getElementById('conn-result').querySelector('p').textContent = '🎉 Perfect!';
     spawnConfetti();
   }
 }
 
 function connSelect(word) {
-  if (connSelected.includes(word)) {
-    connSelected = connSelected.filter(w => w !== word);
-  } else if (connSelected.length < 4) {
-    connSelected.push(word);
-  }
+  if (connSelected.includes(word)) connSelected = connSelected.filter(w => w !== word);
+  else if (connSelected.length < 4) connSelected.push(word);
   renderConnections();
 }
 
@@ -468,24 +1132,18 @@ function connShuffle() {
   renderConnections();
 }
 
-function connClear() {
-  connSelected = [];
-  renderConnections();
-}
+function connClear() { connSelected = []; renderConnections(); }
 
 function connSubmit() {
   if (connSelected.length !== 4) return;
   const match = CONN_CATEGORIES.find(c => c.words.every(w => connSelected.includes(w)) && !connSolved.includes(c));
-  if (match) {
-    connSolved.push(match);
-    connSelected = [];
-  } else {
+  if (match) { connSolved.push(match); connSelected = []; }
+  else {
     connMistakes++;
     if (connMistakes >= 4) {
       document.getElementById('conn-buttons').style.display = 'none';
-      const result = document.getElementById('conn-result');
-      result.style.display = 'block';
-      result.querySelector('p').textContent = 'Nice try! 💛';
+      document.getElementById('conn-result').style.display = 'block';
+      document.getElementById('conn-result').querySelector('p').textContent = 'Nice try! 💛';
     }
   }
   renderConnections();
@@ -529,7 +1187,7 @@ function initCrossword() {
 function renderCrossword() {
   const grid = document.getElementById('cross-grid');
   grid.innerHTML = '';
-  grid.style.gridTemplateColumns = 'repeat(12, 26px)';
+  grid.style.gridTemplateColumns = 'repeat(12, 32px)';
   
   for (let r = 0; r < 12; r++) {
     for (let c = 0; c < 12; c++) {
@@ -547,25 +1205,4 @@ function renderCrossword() {
         const input = document.createElement('input');
         input.type = 'text';
         input.maxLength = 1;
-        input.dataset.key = key;
-        input.oninput = (e) => {
-          e.target.value = e.target.value.toUpperCase();
-          if (e.target.value === crossCells[key].letter) {
-            cell.classList.add('correct');
-          }
-        };
-        cell.appendChild(input);
-      } else {
-        cell.classList.add('black');
-      }
-      grid.appendChild(cell);
-    }
-  }
-}
-
-// Initialize on load
-initWordle();
-</script>
-
-</body>
-</html>
+        input.dataset.key =
